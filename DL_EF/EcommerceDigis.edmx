@@ -58,6 +58,7 @@
           <Property Name="IdSubCategoria" Type="int" />
           <Property Name="IdProveedor" Type="int" />
           <Property Name="EnCurso" Type="int" />
+          <Property Name="Vendidos" Type="int" />
         </EntityType>
         <EntityType Name="Proveedor">
           <Key>
@@ -220,7 +221,6 @@
           <Parameter Name="Imagen" Type="varbinary(max)" Mode="In" />
           <Parameter Name="IdSubCategoria" Type="int" Mode="In" />
           <Parameter Name="IdProveedor" Type="int" Mode="In" />
-          <Parameter Name="EnCurso" Type="int" Mode="In" />
         </Function>
         <Function Name="ProductoDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdProducto" Type="int" Mode="In" />
@@ -244,6 +244,7 @@
           <Parameter Name="IdSubCategoria" Type="int" Mode="In" />
           <Parameter Name="IdProveedor" Type="int" Mode="In" />
           <Parameter Name="EnCurso" Type="int" Mode="In" />
+          <Parameter Name="Vendidos" Type="int" Mode="In" />
         </Function>
         <Function Name="ProveedorAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -501,62 +502,20 @@
             <Parameter Name="IdMunicipio" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Categorias" EntityType="EcommerceDigisModel.Categoria" />
-          <EntitySet Name="Productoes" EntityType="EcommerceDigisModel.Producto" />
           <EntitySet Name="Proveedors" EntityType="EcommerceDigisModel.Proveedor" />
           <EntitySet Name="SubCategorias" EntityType="EcommerceDigisModel.SubCategoria" />
           <AssociationSet Name="FK__SubCatego__IdCat__51300E55" Association="EcommerceDigisModel.FK__SubCatego__IdCat__51300E55">
             <End Role="Categoria" EntitySet="Categorias" />
             <End Role="SubCategoria" EntitySet="SubCategorias" />
           </AssociationSet>
-          <AssociationSet Name="FK__Producto__IdProv__634EBE90" Association="EcommerceDigisModel.FK__Producto__IdProv__634EBE90">
-            <End Role="Proveedor" EntitySet="Proveedors" />
-            <End Role="Producto" EntitySet="Productoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Producto__IdSubC__625A9A57" Association="EcommerceDigisModel.FK__Producto__IdSubC__625A9A57">
-            <End Role="SubCategoria" EntitySet="SubCategorias" />
-            <End Role="Producto" EntitySet="Productoes" />
-          </AssociationSet>
           <FunctionImport Name="CategoriaGetAll" ReturnType="Collection(EcommerceDigisModel.CategoriaGetAll_Result)" />
-          <FunctionImport Name="ProductoAdd">
-            <Parameter Name="Nombre" Mode="In" Type="String" />
-            <Parameter Name="Marca" Mode="In" Type="String" />
-            <Parameter Name="Descripcion" Mode="In" Type="String" />
-            <Parameter Name="Stock" Mode="In" Type="Int32" />
-            <Parameter Name="Precio" Mode="In" Type="Decimal" />
-            <Parameter Name="Valoraciones" Mode="In" Type="Int32" />
-            <Parameter Name="Comentarios" Mode="In" Type="String" />
-            <Parameter Name="KeyWords" Mode="In" Type="String" />
-            <Parameter Name="Imagen" Mode="In" Type="Binary" />
-            <Parameter Name="IdSubCategoria" Mode="In" Type="Int32" />
-            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
-            <Parameter Name="EnCurso" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="ProductoDelete">
           <Parameter Name="IdProducto" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ProductoUpdate">
-            <Parameter Name="IdProducto" Mode="In" Type="Int32" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
-            <Parameter Name="Marca" Mode="In" Type="String" />
-            <Parameter Name="Descripcion" Mode="In" Type="String" />
-            <Parameter Name="Stock" Mode="In" Type="Int32" />
-            <Parameter Name="Precio" Mode="In" Type="Decimal" />
-            <Parameter Name="Valoraciones" Mode="In" Type="Int32" />
-            <Parameter Name="Comentarios" Mode="In" Type="String" />
-            <Parameter Name="KeyWords" Mode="In" Type="String" />
-            <Parameter Name="Imagen" Mode="In" Type="Binary" />
-            <Parameter Name="IdSubCategoria" Mode="In" Type="Int32" />
-            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
-            <Parameter Name="EnCurso" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ProveedorGetAll" ReturnType="Collection(EcommerceDigisModel.ProveedorGetAll_Result)" />
           <FunctionImport Name="SubCategoriaGetAll" ReturnType="Collection(EcommerceDigisModel.SubCategoriaGetAll_Result)" />
           <FunctionImport Name="SubCategoriaGetByCategoria" ReturnType="Collection(EcommerceDigisModel.SubCategoriaGetByCategoria_Result)">
           <Parameter Name="IdCategoria" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ProductoGetAll" ReturnType="Collection(EcommerceDigisModel.ProductoGetAll_Result)" />
-          <FunctionImport Name="ProductoGetById" ReturnType="Collection(EcommerceDigisModel.ProductoGetById_Result)">
-          <Parameter Name="IdProducto" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UsuarioGetById" ReturnType="Collection(EcommerceDigisModel.UsuarioGetById_Result)">
           <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
@@ -568,9 +527,6 @@
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="SitioWeb" Mode="In" Type="String" />
             <Parameter Name="Imagen" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="ProveedorById" ReturnType="Collection(EcommerceDigisModel.ProveedorById_Result)">
-          <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ProveedorDelete">
           <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
@@ -596,7 +552,52 @@
           <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetRolByEmail" ReturnType="Collection(Int32)">
-            <Parameter Name="Email" Mode="In" Type="String" />
+          <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Productoes" EntityType="EcommerceDigisModel.Producto" />
+          <AssociationSet Name="FK__Producto__IdProv__634EBE90" Association="EcommerceDigisModel.FK__Producto__IdProv__634EBE90">
+            <End Role="Proveedor" EntitySet="Proveedors" />
+            <End Role="Producto" EntitySet="Productoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Producto__IdSubC__625A9A57" Association="EcommerceDigisModel.FK__Producto__IdSubC__625A9A57">
+            <End Role="SubCategoria" EntitySet="SubCategorias" />
+            <End Role="Producto" EntitySet="Productoes" />
+          </AssociationSet>
+          <FunctionImport Name="ProductoGetAll" ReturnType="Collection(EcommerceDigisModel.ProductoGetAll_Result)" />
+          <FunctionImport Name="ProductoGetById" ReturnType="Collection(EcommerceDigisModel.ProductoGetById_Result)">
+          <Parameter Name="IdProducto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProductoUpdate">
+            <Parameter Name="IdProducto" Mode="In" Type="Int32" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Marca" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Stock" Mode="In" Type="Int32" />
+            <Parameter Name="Precio" Mode="In" Type="Decimal" />
+            <Parameter Name="Valoraciones" Mode="In" Type="Int32" />
+            <Parameter Name="Comentarios" Mode="In" Type="String" />
+            <Parameter Name="KeyWords" Mode="In" Type="String" />
+            <Parameter Name="Imagen" Mode="In" Type="Binary" />
+            <Parameter Name="IdSubCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
+            <Parameter Name="EnCurso" Mode="In" Type="Int32" />
+            <Parameter Name="Vendidos" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProductoAdd">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Marca" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="Stock" Mode="In" Type="Int32" />
+            <Parameter Name="Precio" Mode="In" Type="Decimal" />
+            <Parameter Name="Valoraciones" Mode="In" Type="Int32" />
+            <Parameter Name="Comentarios" Mode="In" Type="String" />
+            <Parameter Name="KeyWords" Mode="In" Type="String" />
+            <Parameter Name="Imagen" Mode="In" Type="Binary" />
+            <Parameter Name="IdSubCategoria" Mode="In" Type="Int32" />
+            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ProveedorById" ReturnType="Collection(EcommerceDigisModel.ProveedorById_Result)">
+            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Usuario">
@@ -688,26 +689,6 @@
           <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SubCategorias" Relationship="EcommerceDigisModel.FK__SubCatego__IdCat__51300E55" FromRole="Categoria" ToRole="SubCategoria" />
         </EntityType>
-        <EntityType Name="Producto">
-          <Key>
-            <PropertyRef Name="IdProducto" />
-          </Key>
-          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Marca" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Stock" Type="Int32" />
-          <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="Valoraciones" Type="Int32" />
-          <Property Name="Comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="KeyWords" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="IdSubCategoria" Type="Int32" />
-          <Property Name="IdProveedor" Type="Int32" />
-          <Property Name="EnCurso" Type="Int32" />
-          <NavigationProperty Name="Proveedor" Relationship="EcommerceDigisModel.FK__Producto__IdProv__634EBE90" FromRole="Producto" ToRole="Proveedor" />
-          <NavigationProperty Name="SubCategoria" Relationship="EcommerceDigisModel.FK__Producto__IdSubC__625A9A57" FromRole="Producto" ToRole="SubCategoria" />
-        </EntityType>
         <EntityType Name="Proveedor">
           <Key>
             <PropertyRef Name="IdProveedor" />
@@ -745,30 +726,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Producto__IdProv__634EBE90">
-          <End Type="EcommerceDigisModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
-          <End Type="EcommerceDigisModel.Producto" Role="Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="IdProveedor" />
-            </Principal>
-            <Dependent Role="Producto">
-              <PropertyRef Name="IdProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Producto__IdSubC__625A9A57">
-          <End Type="EcommerceDigisModel.SubCategoria" Role="SubCategoria" Multiplicity="0..1" />
-          <End Type="EcommerceDigisModel.Producto" Role="Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubCategoria">
-              <PropertyRef Name="IdSubCategoria" />
-            </Principal>
-            <Dependent Role="Producto">
-              <PropertyRef Name="IdSubCategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="CategoriaGetAll_Result">
           <Property Type="Int32" Name="IdCategoria" Nullable="false" />
           <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
@@ -797,6 +754,95 @@
           <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="255" />
           <Property Type="Binary" Name="Imagen" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="UsuarioGetById_Result">
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="Boolean" Name="Estatus" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="16" />
+          <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
+          <Property Type="String" Name="Sexo" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="Celular" Nullable="false" MaxLength="20" />
+          <Property Type="Binary" Name="Imagen" Nullable="true" />
+          <Property Type="Int32" Name="IdRol" Nullable="true" />
+          <Property Type="Int32" Name="IdDireccion" Nullable="false" />
+          <Property Type="String" Name="Calle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Colonia" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CodigoPostal" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="NumeroExterior" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="NumeroInterior" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="IdMunicipio" Nullable="false" />
+          <Property Type="String" Name="NombreMunicipio" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdEstado" Nullable="false" />
+          <Property Type="String" Name="NombreEstado" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ProductoGetIndex_Result">
+          <Property Type="Int32" Name="IdProducto" Nullable="false" />
+          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="Marca" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="Stock" Nullable="true" />
+          <Property Type="Decimal" Name="Precio" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="Valoraciones" Nullable="true" />
+          <Property Type="String" Name="Comentarios" Nullable="true" />
+          <Property Type="String" Name="KeyWords" Nullable="true" MaxLength="100" />
+          <Property Type="Binary" Name="Imagen" Nullable="true" />
+          <Property Type="Int32" Name="IdSubCategoria" Nullable="true" />
+          <Property Type="String" Name="NombreSubCategoria" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdCategoria" Nullable="true" />
+          <Property Type="String" Name="NombreCategoria" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdProveedor" Nullable="true" />
+          <Property Type="String" Name="NombreProveedor" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="EnCurso" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Marca" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Stock" Type="Int32" />
+          <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Valoraciones" Type="Int32" />
+          <Property Name="Comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="KeyWords" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="IdSubCategoria" Type="Int32" />
+          <Property Name="IdProveedor" Type="Int32" />
+          <Property Name="EnCurso" Type="Int32" />
+          <Property Name="Vendidos" Type="Int32" />
+          <NavigationProperty Name="Proveedor" Relationship="EcommerceDigisModel.FK__Producto__IdProv__634EBE90" FromRole="Producto" ToRole="Proveedor" />
+          <NavigationProperty Name="SubCategoria" Relationship="EcommerceDigisModel.FK__Producto__IdSubC__625A9A57" FromRole="Producto" ToRole="SubCategoria" />
+        </EntityType>
+        <Association Name="FK__Producto__IdProv__634EBE90">
+          <End Type="EcommerceDigisModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Producto__IdSubC__625A9A57">
+          <End Type="EcommerceDigisModel.SubCategoria" Role="SubCategoria" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.Producto" Role="Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategoria">
+              <PropertyRef Name="IdSubCategoria" />
+            </Principal>
+            <Dependent Role="Producto">
+              <PropertyRef Name="IdSubCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <ComplexType Name="ProductoGetAll_Result">
           <Property Type="Int32" Name="IdProducto" Nullable="false" />
           <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="300" />
@@ -834,31 +880,7 @@
           <Property Type="Int32" Name="IdProveedor" Nullable="true" />
           <Property Type="String" Name="NombreProveedor" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="EnCurso" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="UsuarioGetById_Result">
-          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
-          <Property Type="Boolean" Name="Estatus" Nullable="true" />
-          <Property Type="String" Name="UserName" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="ApellidoMaterno" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Password" Nullable="false" MaxLength="16" />
-          <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
-          <Property Type="String" Name="Sexo" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="Celular" Nullable="false" MaxLength="20" />
-          <Property Type="Binary" Name="Imagen" Nullable="true" />
-          <Property Type="Int32" Name="IdRol" Nullable="true" />
-          <Property Type="Int32" Name="IdDireccion" Nullable="false" />
-          <Property Type="String" Name="Calle" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Colonia" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="CodigoPostal" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="NumeroExterior" Nullable="false" MaxLength="5" />
-          <Property Type="String" Name="NumeroInterior" Nullable="true" MaxLength="5" />
-          <Property Type="Int32" Name="IdMunicipio" Nullable="false" />
-          <Property Type="String" Name="NombreMunicipio" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="IdEstado" Nullable="false" />
-          <Property Type="String" Name="NombreEstado" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Vendidos" Nullable="true" />
         </ComplexType>
         <ComplexType Name="ProveedorById_Result">
           <Property Type="Int32" Name="IdProveedor" Nullable="false" />
@@ -868,25 +890,6 @@
           <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SitioWeb" Nullable="true" MaxLength="100" />
           <Property Type="Binary" Name="Imagen" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="ProductoGetIndex_Result">
-          <Property Type="Int32" Name="IdProducto" Nullable="false" />
-          <Property Type="String" Name="NombreProducto" Nullable="false" MaxLength="300" />
-          <Property Type="String" Name="Marca" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="255" />
-          <Property Type="Int32" Name="Stock" Nullable="true" />
-          <Property Type="Decimal" Name="Precio" Nullable="true" Precision="10" Scale="2" />
-          <Property Type="Int32" Name="Valoraciones" Nullable="true" />
-          <Property Type="String" Name="Comentarios" Nullable="true" />
-          <Property Type="String" Name="KeyWords" Nullable="true" MaxLength="100" />
-          <Property Type="Binary" Name="Imagen" Nullable="true" />
-          <Property Type="Int32" Name="IdSubCategoria" Nullable="true" />
-          <Property Type="String" Name="NombreSubCategoria" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="IdCategoria" Nullable="true" />
-          <Property Type="String" Name="NombreCategoria" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="IdProveedor" Nullable="true" />
-          <Property Type="String" Name="NombreProveedor" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="EnCurso" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1017,25 +1020,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Productoes">
-            <EntityTypeMapping TypeName="EcommerceDigisModel.Producto">
-              <MappingFragment StoreEntitySet="Producto">
-                <ScalarProperty Name="EnCurso" ColumnName="EnCurso" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
-                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
-                <ScalarProperty Name="Valoraciones" ColumnName="Valoraciones" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Marca" ColumnName="Marca" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Proveedors">
             <EntityTypeMapping TypeName="EcommerceDigisModel.Proveedor">
               <MappingFragment StoreEntitySet="Proveedor">
@@ -1069,9 +1053,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProductoAdd" FunctionName="EcommerceDigisModel.Store.ProductoAdd" />
           <FunctionImportMapping FunctionImportName="ProductoDelete" FunctionName="EcommerceDigisModel.Store.ProductoDelete" />
-          <FunctionImportMapping FunctionImportName="ProductoUpdate" FunctionName="EcommerceDigisModel.Store.ProductoUpdate" />
           <FunctionImportMapping FunctionImportName="ProveedorGetAll" FunctionName="EcommerceDigisModel.Store.ProveedorGetAll">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EcommerceDigisModel.ProveedorGetAll_Result">
@@ -1107,6 +1089,85 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UsuarioGetById" FunctionName="EcommerceDigisModel.Store.UsuarioGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EcommerceDigisModel.UsuarioGetById_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="NumeroExterior" ColumnName="NumeroExterior" />
+                <ScalarProperty Name="NumeroInterior" ColumnName="NumeroInterior" />
+                <ScalarProperty Name="IdMunicipio" ColumnName="IdMunicipio" />
+                <ScalarProperty Name="NombreMunicipio" ColumnName="NombreMunicipio" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="NombreEstado" ColumnName="NombreEstado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ProveedorAdd" FunctionName="EcommerceDigisModel.Store.ProveedorAdd" />
+          <FunctionImportMapping FunctionImportName="ProveedorDelete" FunctionName="EcommerceDigisModel.Store.ProveedorDelete" />
+          <FunctionImportMapping FunctionImportName="ProveedorUpdate" FunctionName="EcommerceDigisModel.Store.ProveedorUpdate" />
+          <FunctionImportMapping FunctionImportName="ProductoGetIndex" FunctionName="EcommerceDigisModel.Store.ProductoGetIndex">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EcommerceDigisModel.ProductoGetIndex_Result">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Valoraciones" ColumnName="Valoraciones" />
+                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
+                <ScalarProperty Name="NombreSubCategoria" ColumnName="NombreSubCategoria" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="NombreProveedor" ColumnName="NombreProveedor" />
+                <ScalarProperty Name="EnCurso" ColumnName="EnCurso" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ConfirmPassword" FunctionName="EcommerceDigisModel.Store.ConfirmPassword" />
+          <FunctionImportMapping FunctionImportName="ConfirmUser" FunctionName="EcommerceDigisModel.Store.ConfirmUser" />
+          <FunctionImportMapping FunctionImportName="GetNombreByEmail" FunctionName="EcommerceDigisModel.Store.GetNombreByEmail" />
+          <FunctionImportMapping FunctionImportName="GetRolByEmail" FunctionName="EcommerceDigisModel.Store.GetRolByEmail" />
+          <EntitySetMapping Name="Productoes">
+            <EntityTypeMapping TypeName="EcommerceDigisModel.Producto">
+              <MappingFragment StoreEntitySet="Producto">
+                <ScalarProperty Name="Vendidos" ColumnName="Vendidos" />
+                <ScalarProperty Name="EnCurso" ColumnName="EnCurso" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
+                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+                <ScalarProperty Name="Valoraciones" ColumnName="Valoraciones" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ProductoGetAll" FunctionName="EcommerceDigisModel.Store.ProductoGetAll">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EcommerceDigisModel.ProductoGetAll_Result">
@@ -1150,39 +1211,12 @@
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
                 <ScalarProperty Name="NombreProveedor" ColumnName="NombreProveedor" />
                 <ScalarProperty Name="EnCurso" ColumnName="EnCurso" />
+                <ScalarProperty Name="Vendidos" ColumnName="Vendidos" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="UsuarioGetById" FunctionName="EcommerceDigisModel.Store.UsuarioGetById">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="EcommerceDigisModel.UsuarioGetById_Result">
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
-                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
-                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
-                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
-                <ScalarProperty Name="NumeroExterior" ColumnName="NumeroExterior" />
-                <ScalarProperty Name="NumeroInterior" ColumnName="NumeroInterior" />
-                <ScalarProperty Name="IdMunicipio" ColumnName="IdMunicipio" />
-                <ScalarProperty Name="NombreMunicipio" ColumnName="NombreMunicipio" />
-                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
-                <ScalarProperty Name="NombreEstado" ColumnName="NombreEstado" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProveedorAdd" FunctionName="EcommerceDigisModel.Store.ProveedorAdd" />
+          <FunctionImportMapping FunctionImportName="ProductoUpdate" FunctionName="EcommerceDigisModel.Store.ProductoUpdate" />
+          <FunctionImportMapping FunctionImportName="ProductoAdd" FunctionName="EcommerceDigisModel.Store.ProductoAdd" />
           <FunctionImportMapping FunctionImportName="ProveedorById" FunctionName="EcommerceDigisModel.Store.ProveedorById">
             <ResultMapping>
               <ComplexTypeMapping TypeName="EcommerceDigisModel.ProveedorById_Result">
@@ -1196,35 +1230,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ProveedorDelete" FunctionName="EcommerceDigisModel.Store.ProveedorDelete" />
-          <FunctionImportMapping FunctionImportName="ProveedorUpdate" FunctionName="EcommerceDigisModel.Store.ProveedorUpdate" />
-          <FunctionImportMapping FunctionImportName="ProductoGetIndex" FunctionName="EcommerceDigisModel.Store.ProductoGetIndex">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="EcommerceDigisModel.ProductoGetIndex_Result">
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="NombreProducto" ColumnName="NombreProducto" />
-                <ScalarProperty Name="Marca" ColumnName="Marca" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Stock" ColumnName="Stock" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="Valoraciones" ColumnName="Valoraciones" />
-                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
-                <ScalarProperty Name="KeyWords" ColumnName="KeyWords" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="IdSubCategoria" ColumnName="IdSubCategoria" />
-                <ScalarProperty Name="NombreSubCategoria" ColumnName="NombreSubCategoria" />
-                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
-                <ScalarProperty Name="NombreCategoria" ColumnName="NombreCategoria" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="NombreProveedor" ColumnName="NombreProveedor" />
-                <ScalarProperty Name="EnCurso" ColumnName="EnCurso" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ConfirmPassword" FunctionName="EcommerceDigisModel.Store.ConfirmPassword" />
-          <FunctionImportMapping FunctionImportName="ConfirmUser" FunctionName="EcommerceDigisModel.Store.ConfirmUser" />
-          <FunctionImportMapping FunctionImportName="GetNombreByEmail" FunctionName="EcommerceDigisModel.Store.GetNombreByEmail" />
-          <FunctionImportMapping FunctionImportName="GetRolByEmail" FunctionName="EcommerceDigisModel.Store.GetRolByEmail" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

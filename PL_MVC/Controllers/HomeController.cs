@@ -83,7 +83,9 @@ namespace PL_MVC.Controllers
         }
         public ActionResult Logout()
         {
-            return RedirectToAction("Home");
+            Session["SesionActiva"] = "false";
+            Session["Rol"] = 0;
+            return RedirectToAction("Index");
         }
     }
 }

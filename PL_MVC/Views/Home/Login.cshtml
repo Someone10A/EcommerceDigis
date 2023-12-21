@@ -7,29 +7,41 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <meta name="viewport" content="width=device-width" />
     <title>Login</title>
+
 </head>
 <body>
+    <div class="container">
+        <div class="row h-100">
+            <div class="col-md-6">
+                <img src="~/images/Logo.png" alt="Logo" class="logo">
+            </div>
+            <div class="col-md-6">
+                @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login" }))
+                {
+                    <h2>@ViewBag.Error</h2>
+                    <input type="text" placeholder="Correo" , name="email" autocomplete="off">
+                    <input type="password" placeholder="Contraseña" , name="password" autocomplete="off">
+
+                    <button type="submit" class="btn" value="Ingresar">Ingresar</button>
+                }
+                <a href="#" target="_blank">Como ingresar</a>
+            </div>
+        </div>
+    </div>
+
+   
 
 
-    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login" }))
-    {
-        <h2>@ViewBag.Error</h2>
-        <input type="text" placeholder="Correo" , name="email" autocomplete="off">
-        <input type="password" placeholder="Contraseña" , name="password" autocomplete="off">
-
-        <button type="submit" class="btn" value="Ingresar">Ingresar</button>
-    }
-
-
-    <a href="#" target="_blank">Como ingresar</a>
+    
 
 </body>
 </html>
 <style>
     body {
-        background: linear-gradient(to right, red, black);
+        background: linear-gradient(to right, white, #145873);
         font-family: var(--bs-body-font-family);
     }
 
@@ -44,7 +56,7 @@
         border-radius: 10px;
         position: absolute;
         top: 50%;
-        left: 50%;
+        left: 70%;
         width: 400px;
         -webkit-transform: translate(-50%, -50%);
         -moz-transform: translate(-50%, -50%);
@@ -55,6 +67,11 @@
         -moz-transition: -moz-transform 300ms, box-shadow 300ms;
         transition: transform 300ms, box-shadow 300ms;
         box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+    }
+    .logo {
+        position: absolute;
+        top: 30%;
+        left: 12%;
     }
 
         .login::before, .login::after {
@@ -72,7 +89,7 @@
         .login::before {
             left: 40%;
             bottom: -130%;
-            background-color: rgba(255, 0, 0, 1);
+            background-color: rgba(20, 88, 115, 1);
             -webkit-animation: wawes 6s infinite linear;
             -moz-animation: wawes 6s infinite linear;
             animation: wawes 6s infinite linear;
@@ -111,14 +128,14 @@
             margin-top: 10px;
             margin-left: -5px;
             border-radius: 5px;
-            background-color: #212529;
+            background-color: #145873;
             -webkit-transition: background-color 300ms;
             -moz-transition: background-color 300ms;
             transition: background-color 300ms;
         }
 
             .login > button:hover {
-                background-color: #FF0000;
+                background-color: #145873;
             }
 
     @@-webkit-keyframes wawes {

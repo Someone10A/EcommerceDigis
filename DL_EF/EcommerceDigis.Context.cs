@@ -33,9 +33,9 @@ namespace DL_EF
         public virtual DbSet<Rol> Rols { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Categoria> Categorias { get; set; }
-        public virtual DbSet<Producto> Productoes { get; set; }
         public virtual DbSet<Proveedor> Proveedors { get; set; }
         public virtual DbSet<SubCategoria> SubCategorias { get; set; }
+        public virtual DbSet<Producto> Productoes { get; set; }
     
         public virtual int UsuarioDelete(Nullable<int> idUsuario)
         {
@@ -226,59 +226,6 @@ namespace DL_EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CategoriaGetAll_Result>("CategoriaGetAll");
         }
     
-        public virtual int ProductoAdd(string nombre, string marca, string descripcion, Nullable<int> stock, Nullable<decimal> precio, Nullable<int> valoraciones, string comentarios, string keyWords, byte[] imagen, Nullable<int> idSubCategoria, Nullable<int> idProveedor, Nullable<int> enCurso)
-        {
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
-    
-            var marcaParameter = marca != null ?
-                new ObjectParameter("Marca", marca) :
-                new ObjectParameter("Marca", typeof(string));
-    
-            var descripcionParameter = descripcion != null ?
-                new ObjectParameter("Descripcion", descripcion) :
-                new ObjectParameter("Descripcion", typeof(string));
-    
-            var stockParameter = stock.HasValue ?
-                new ObjectParameter("Stock", stock) :
-                new ObjectParameter("Stock", typeof(int));
-    
-            var precioParameter = precio.HasValue ?
-                new ObjectParameter("Precio", precio) :
-                new ObjectParameter("Precio", typeof(decimal));
-    
-            var valoracionesParameter = valoraciones.HasValue ?
-                new ObjectParameter("Valoraciones", valoraciones) :
-                new ObjectParameter("Valoraciones", typeof(int));
-    
-            var comentariosParameter = comentarios != null ?
-                new ObjectParameter("Comentarios", comentarios) :
-                new ObjectParameter("Comentarios", typeof(string));
-    
-            var keyWordsParameter = keyWords != null ?
-                new ObjectParameter("KeyWords", keyWords) :
-                new ObjectParameter("KeyWords", typeof(string));
-    
-            var imagenParameter = imagen != null ?
-                new ObjectParameter("Imagen", imagen) :
-                new ObjectParameter("Imagen", typeof(byte[]));
-    
-            var idSubCategoriaParameter = idSubCategoria.HasValue ?
-                new ObjectParameter("IdSubCategoria", idSubCategoria) :
-                new ObjectParameter("IdSubCategoria", typeof(int));
-    
-            var idProveedorParameter = idProveedor.HasValue ?
-                new ObjectParameter("IdProveedor", idProveedor) :
-                new ObjectParameter("IdProveedor", typeof(int));
-    
-            var enCursoParameter = enCurso.HasValue ?
-                new ObjectParameter("EnCurso", enCurso) :
-                new ObjectParameter("EnCurso", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoAdd", nombreParameter, marcaParameter, descripcionParameter, stockParameter, precioParameter, valoracionesParameter, comentariosParameter, keyWordsParameter, imagenParameter, idSubCategoriaParameter, idProveedorParameter, enCursoParameter);
-        }
-    
         public virtual int ProductoDelete(Nullable<int> idProducto)
         {
             var idProductoParameter = idProducto.HasValue ?
@@ -286,63 +233,6 @@ namespace DL_EF
                 new ObjectParameter("IdProducto", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoDelete", idProductoParameter);
-        }
-    
-        public virtual int ProductoUpdate(Nullable<int> idProducto, string nombre, string marca, string descripcion, Nullable<int> stock, Nullable<decimal> precio, Nullable<int> valoraciones, string comentarios, string keyWords, byte[] imagen, Nullable<int> idSubCategoria, Nullable<int> idProveedor, Nullable<int> enCurso)
-        {
-            var idProductoParameter = idProducto.HasValue ?
-                new ObjectParameter("IdProducto", idProducto) :
-                new ObjectParameter("IdProducto", typeof(int));
-    
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
-    
-            var marcaParameter = marca != null ?
-                new ObjectParameter("Marca", marca) :
-                new ObjectParameter("Marca", typeof(string));
-    
-            var descripcionParameter = descripcion != null ?
-                new ObjectParameter("Descripcion", descripcion) :
-                new ObjectParameter("Descripcion", typeof(string));
-    
-            var stockParameter = stock.HasValue ?
-                new ObjectParameter("Stock", stock) :
-                new ObjectParameter("Stock", typeof(int));
-    
-            var precioParameter = precio.HasValue ?
-                new ObjectParameter("Precio", precio) :
-                new ObjectParameter("Precio", typeof(decimal));
-    
-            var valoracionesParameter = valoraciones.HasValue ?
-                new ObjectParameter("Valoraciones", valoraciones) :
-                new ObjectParameter("Valoraciones", typeof(int));
-    
-            var comentariosParameter = comentarios != null ?
-                new ObjectParameter("Comentarios", comentarios) :
-                new ObjectParameter("Comentarios", typeof(string));
-    
-            var keyWordsParameter = keyWords != null ?
-                new ObjectParameter("KeyWords", keyWords) :
-                new ObjectParameter("KeyWords", typeof(string));
-    
-            var imagenParameter = imagen != null ?
-                new ObjectParameter("Imagen", imagen) :
-                new ObjectParameter("Imagen", typeof(byte[]));
-    
-            var idSubCategoriaParameter = idSubCategoria.HasValue ?
-                new ObjectParameter("IdSubCategoria", idSubCategoria) :
-                new ObjectParameter("IdSubCategoria", typeof(int));
-    
-            var idProveedorParameter = idProveedor.HasValue ?
-                new ObjectParameter("IdProveedor", idProveedor) :
-                new ObjectParameter("IdProveedor", typeof(int));
-    
-            var enCursoParameter = enCurso.HasValue ?
-                new ObjectParameter("EnCurso", enCurso) :
-                new ObjectParameter("EnCurso", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoUpdate", idProductoParameter, nombreParameter, marcaParameter, descripcionParameter, stockParameter, precioParameter, valoracionesParameter, comentariosParameter, keyWordsParameter, imagenParameter, idSubCategoriaParameter, idProveedorParameter, enCursoParameter);
         }
     
         public virtual ObjectResult<ProveedorGetAll_Result> ProveedorGetAll()
@@ -362,20 +252,6 @@ namespace DL_EF
                 new ObjectParameter("IdCategoria", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SubCategoriaGetByCategoria_Result>("SubCategoriaGetByCategoria", idCategoriaParameter);
-        }
-    
-        public virtual ObjectResult<ProductoGetAll_Result> ProductoGetAll()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductoGetAll_Result>("ProductoGetAll");
-        }
-    
-        public virtual ObjectResult<ProductoGetById_Result> ProductoGetById(Nullable<int> idProducto)
-        {
-            var idProductoParameter = idProducto.HasValue ?
-                new ObjectParameter("IdProducto", idProducto) :
-                new ObjectParameter("IdProducto", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductoGetById_Result>("ProductoGetById", idProductoParameter);
         }
     
         public virtual ObjectResult<UsuarioGetById_Result> UsuarioGetById(Nullable<int> idUsuario)
@@ -414,15 +290,6 @@ namespace DL_EF
                 new ObjectParameter("Imagen", typeof(byte[]));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProveedorAdd", nombreParameter, direccionParameter, telefonoParameter, emailParameter, sitioWebParameter, imagenParameter);
-        }
-    
-        public virtual ObjectResult<ProveedorById_Result> ProveedorById(Nullable<int> idProveedor)
-        {
-            var idProveedorParameter = idProveedor.HasValue ?
-                new ObjectParameter("IdProveedor", idProveedor) :
-                new ObjectParameter("IdProveedor", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProveedorById_Result>("ProveedorById", idProveedorParameter);
         }
     
         public virtual int ProveedorDelete(Nullable<int> idProveedor)
@@ -510,6 +377,139 @@ namespace DL_EF
                 new ObjectParameter("Email", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetRolByEmail", emailParameter);
+        }
+    
+        public virtual ObjectResult<ProductoGetAll_Result> ProductoGetAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductoGetAll_Result>("ProductoGetAll");
+        }
+    
+        public virtual ObjectResult<ProductoGetById_Result> ProductoGetById(Nullable<int> idProducto)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductoGetById_Result>("ProductoGetById", idProductoParameter);
+        }
+    
+        public virtual int ProductoUpdate(Nullable<int> idProducto, string nombre, string marca, string descripcion, Nullable<int> stock, Nullable<decimal> precio, Nullable<int> valoraciones, string comentarios, string keyWords, byte[] imagen, Nullable<int> idSubCategoria, Nullable<int> idProveedor, Nullable<int> enCurso, Nullable<int> vendidos)
+        {
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var marcaParameter = marca != null ?
+                new ObjectParameter("Marca", marca) :
+                new ObjectParameter("Marca", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var stockParameter = stock.HasValue ?
+                new ObjectParameter("Stock", stock) :
+                new ObjectParameter("Stock", typeof(int));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("Precio", precio) :
+                new ObjectParameter("Precio", typeof(decimal));
+    
+            var valoracionesParameter = valoraciones.HasValue ?
+                new ObjectParameter("Valoraciones", valoraciones) :
+                new ObjectParameter("Valoraciones", typeof(int));
+    
+            var comentariosParameter = comentarios != null ?
+                new ObjectParameter("Comentarios", comentarios) :
+                new ObjectParameter("Comentarios", typeof(string));
+    
+            var keyWordsParameter = keyWords != null ?
+                new ObjectParameter("KeyWords", keyWords) :
+                new ObjectParameter("KeyWords", typeof(string));
+    
+            var imagenParameter = imagen != null ?
+                new ObjectParameter("Imagen", imagen) :
+                new ObjectParameter("Imagen", typeof(byte[]));
+    
+            var idSubCategoriaParameter = idSubCategoria.HasValue ?
+                new ObjectParameter("IdSubCategoria", idSubCategoria) :
+                new ObjectParameter("IdSubCategoria", typeof(int));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("IdProveedor", idProveedor) :
+                new ObjectParameter("IdProveedor", typeof(int));
+    
+            var enCursoParameter = enCurso.HasValue ?
+                new ObjectParameter("EnCurso", enCurso) :
+                new ObjectParameter("EnCurso", typeof(int));
+    
+            var vendidosParameter = vendidos.HasValue ?
+                new ObjectParameter("Vendidos", vendidos) :
+                new ObjectParameter("Vendidos", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoUpdate", idProductoParameter, nombreParameter, marcaParameter, descripcionParameter, stockParameter, precioParameter, valoracionesParameter, comentariosParameter, keyWordsParameter, imagenParameter, idSubCategoriaParameter, idProveedorParameter, enCursoParameter, vendidosParameter);
+        }
+    
+        public virtual int ProductoAdd(string nombre, string marca, string descripcion, Nullable<int> stock, Nullable<decimal> precio, Nullable<int> valoraciones, string comentarios, string keyWords, byte[] imagen, Nullable<int> idSubCategoria, Nullable<int> idProveedor)
+        {
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var marcaParameter = marca != null ?
+                new ObjectParameter("Marca", marca) :
+                new ObjectParameter("Marca", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var stockParameter = stock.HasValue ?
+                new ObjectParameter("Stock", stock) :
+                new ObjectParameter("Stock", typeof(int));
+    
+            var precioParameter = precio.HasValue ?
+                new ObjectParameter("Precio", precio) :
+                new ObjectParameter("Precio", typeof(decimal));
+    
+            var valoracionesParameter = valoraciones.HasValue ?
+                new ObjectParameter("Valoraciones", valoraciones) :
+                new ObjectParameter("Valoraciones", typeof(int));
+    
+            var comentariosParameter = comentarios != null ?
+                new ObjectParameter("Comentarios", comentarios) :
+                new ObjectParameter("Comentarios", typeof(string));
+    
+            var keyWordsParameter = keyWords != null ?
+                new ObjectParameter("KeyWords", keyWords) :
+                new ObjectParameter("KeyWords", typeof(string));
+    
+            var imagenParameter = imagen != null ?
+                new ObjectParameter("Imagen", imagen) :
+                new ObjectParameter("Imagen", typeof(byte[]));
+    
+            var idSubCategoriaParameter = idSubCategoria.HasValue ?
+                new ObjectParameter("IdSubCategoria", idSubCategoria) :
+                new ObjectParameter("IdSubCategoria", typeof(int));
+    
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("IdProveedor", idProveedor) :
+                new ObjectParameter("IdProveedor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ProductoAdd", nombreParameter, marcaParameter, descripcionParameter, stockParameter, precioParameter, valoracionesParameter, comentariosParameter, keyWordsParameter, imagenParameter, idSubCategoriaParameter, idProveedorParameter);
+        }
+    
+        public virtual ObjectResult<ProveedorById_Result> ProveedorById(Nullable<int> idProveedor)
+        {
+            var idProveedorParameter = idProveedor.HasValue ?
+                new ObjectParameter("IdProveedor", idProveedor) :
+                new ObjectParameter("IdProveedor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProveedorById_Result>("ProveedorById", idProveedorParameter);
         }
     }
 }

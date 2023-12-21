@@ -27,6 +27,7 @@ namespace DL_EF
         public Nullable<int> IdSubCategoria { get; set; }
         public Nullable<int> IdProveedor { get; set; }
         public Nullable<int> EnCurso { get; set; }
+        public Nullable<int> Vendidos { get; set; }
     
         public virtual Proveedor Proveedor { get; set; }
         public virtual SubCategoria SubCategoria { get; set; }

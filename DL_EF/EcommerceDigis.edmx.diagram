@@ -15,10 +15,10 @@
         <AssociationConnector Association="EcommerceDigisModel.FK__Direccion__IdUsu__17036CC0" />
         <AssociationConnector Association="EcommerceDigisModel.FK__Usuario__IdRol__03F0984C" />
         <EntityTypeShape EntityType="EcommerceDigisModel.Categoria" Width="1.5" PointX="5.375" PointY="7.125" />
-        <EntityTypeShape EntityType="EcommerceDigisModel.Producto" Width="1.5" PointX="9.875" PointY="6" />
         <EntityTypeShape EntityType="EcommerceDigisModel.Proveedor" Width="1.5" PointX="7.625" PointY="2.75" />
         <EntityTypeShape EntityType="EcommerceDigisModel.SubCategoria" Width="1.5" PointX="7.625" PointY="6.75" />
         <AssociationConnector Association="EcommerceDigisModel.FK__SubCatego__IdCat__51300E55" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.Producto" Width="1.5" PointX="9.875" PointY="3.875" />
         <AssociationConnector Association="EcommerceDigisModel.FK__Producto__IdProv__634EBE90" />
         <AssociationConnector Association="EcommerceDigisModel.FK__Producto__IdSubC__625A9A57" />
         </Diagram>

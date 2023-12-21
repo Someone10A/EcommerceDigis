@@ -30,5 +30,6 @@ namespace DL_EF
         public Nullable<int> IdProveedor { get; set; }
         public string NombreProveedor { get; set; }
         public Nullable<int> EnCurso { get; set; }
+        public Nullable<int> Vendidos { get; set; }
     }
 }

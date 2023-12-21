@@ -21,6 +21,7 @@ namespace ML
         public SubCategoria SubCategoria { get; set; }
         public Proveedor Proveedor { get; set; }
         public int EnCurso { get; set; }
+        public int Ventas { get; set; }
         public List<object> Productos { get; set; }
     }
 }

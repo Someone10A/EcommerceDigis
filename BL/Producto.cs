@@ -18,7 +18,7 @@ namespace BL
                 using (DL_EF.EcommerceDigisEntities context = new DL_EF.EcommerceDigisEntities())
                 {
                    
-                    var query = context.ProductoAdd(producto.Nombre, producto.Marca, producto.Descripcion, producto.Stock,producto.Precio,producto.Valoraciones, producto.Comentarios, producto.KeyWords, producto.Imagen, producto.SubCategoria.IdSubCategoria, producto.Proveedor.IdProveedor, producto.EnCurso);
+                    var query = context.ProductoAdd(producto.Nombre, producto.Marca, producto.Descripcion, producto.Stock,producto.Precio,producto.Valoraciones, producto.Comentarios, producto.KeyWords, producto.Imagen, producto.SubCategoria.IdSubCategoria, producto.Proveedor.IdProveedor);
 
                     if (query > 0)
                     {
@@ -49,7 +49,7 @@ namespace BL
                 using (DL_EF.EcommerceDigisEntities context = new DL_EF.EcommerceDigisEntities())
                 {
 
-                    var query = context.ProductoUpdate(producto.IdProducto,producto.Nombre, producto.Marca, producto.Descripcion, producto.Stock, producto.Precio, producto.Valoraciones, producto.Comentarios, producto.KeyWords, producto.Imagen, producto.SubCategoria.IdSubCategoria, producto.Proveedor.IdProveedor, producto.EnCurso);
+                    var query = context.ProductoUpdate(producto.IdProducto,producto.Nombre, producto.Marca, producto.Descripcion, producto.Stock, producto.Precio, producto.Valoraciones, producto.Comentarios, producto.KeyWords, producto.Imagen, producto.SubCategoria.IdSubCategoria, producto.Proveedor.IdProveedor, producto.EnCurso,producto.Ventas);
                     if (query > 0)
                     {
                         result.Message = "Producto actualizado correctamente";
