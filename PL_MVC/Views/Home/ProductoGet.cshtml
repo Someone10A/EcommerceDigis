@@ -1,0 +1,65 @@
+﻿@model ML.Producto
+@{
+    ViewBag.Title = "ProductoGet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/MyStyles/ProductoStyles.css">
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <card class="imgProducto">
+                @if (Model.Imagen == null)
+                {
+                    <img src="~/images/DefaultImage.png" id="imgProducto" style="  width:100px; height:100px; " />
+                }
+                else
+                {
+                    <img src="data:image/png;base64,@Convert.ToBase64String(Model.Imagen)" id="imgProducto" />
+                }
+            </card>
+        </div>
+        <div class="col-md-4">
+            <card class="infoProducto">
+                <h4>@Model.Nombre</h4>
+                <p>@Model.Descripcion</p>
+            </card>
+        </div>
+        <div class="col-md-4">
+            <card class="compraProducto">
+                <h2>Precio: @Model.Precio</h2>
+                <p class="existencias">Existencias: @Model.Stock</p>
+                <div class="row">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-secondary" type="button" onclick="restarValor()">-</button>
+                        </div>
+                        <input type="number" class="col-md-3 text-center" id="inputValor" value="1">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button" onclick="sumarValor()">+</button>
+                        </div>
+                    </div>
+                    <p></p>
+                </div>
+                <div class="row">
+                    <button class="btn btn-info col-md-4 form-control" onclick="agregarAlCarrito('@Model.IdProducto')">Agregar al carrito</button>
+                    <p></p>
+                    <button class="btn btn-info col-md-4 form-control" onclick="comprarAhora('@Model.IdProducto')">Comprar ahora</button>
+
+                </div>
+                
+            </card>
+        </div>
+    </div>
+</div>
+<script>
+    function sumarValor() {
+        document.getElementById('inputValor').stepUp();
+    }
+
+    function restarValor() {
+        var input = document.getElementById('inputValor');
+        if (parseInt(input.value) > 1) {
+            input.stepDown();
+        }
+    }
+</script>

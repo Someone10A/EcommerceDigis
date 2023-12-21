@@ -1,0 +1,85 @@
+﻿    @model ML.Producto
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Productos</h2>
+        </div>
+        <div class="col-md-12">
+            <h5>Añade, edita, elimina de la tabla</h5>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 offset-md-11">
+            @Html.ActionLink(" +", "Form", "Producto", new { @class = "btn btn-outline-success bi-person-fill-add" })
+        </div>
+    </div>
+    <div>
+        @if (Model.Productos != null)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Editar</th>
+                                <th>Nombre</th>
+                                <th>Marca</th>
+                                <th>Stock</th>
+                                <th>EnCurso</th>
+                                <th>Categoria</th>
+                                <th>Precio</th>
+                                <th>Proveedor</th>
+                                <th>Imagen</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.Producto producto in Model.Productos)
+                            {
+                                <tr>
+                                    <td class="text-center"><a class="btn btn-primary bi bi-pencil-fill " href="@Url.Action("Form", "Producto", new {IdProducto = producto.IdProducto})"><i class=""></i></a></td>
+
+
+                                    <td>@producto.Nombre</td>
+                                    <td>@producto.Marca</td>
+                                    <td>@producto.Stock</td>
+                                    <td>@producto.EnCurso</td>
+                                    <td>@producto.SubCategoria.Nombre</td>
+                                    <td>@producto.Precio</td>
+                                    <td>@producto.Proveedor.Nombre</td>
+                                    <td>
+                                        @if (producto.Imagen == null)
+                                        {
+                                            <img src="~/images/DefaultImage.png" id="imgProducto" style="  width:100px; height:100px; " />
+                                        }
+                                        else
+                                        {
+                                            <img src="data:image/png;base64,@Convert.ToBase64String(producto.Imagen)" id="imgProducto" style="  width:100px; height:100px; " />
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-danger bi bi-trash" onclick="return confirm('¿Estas seguro de eliminar este producto?');" href="@Url.Action("Delete", "Producto", new {IdProducto = producto.IdProducto})"><i class=""></i></a>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                <h3>No se han podido recuperar resultados</h3>
+            </div>
+        }
+    </div>
+</div>
+

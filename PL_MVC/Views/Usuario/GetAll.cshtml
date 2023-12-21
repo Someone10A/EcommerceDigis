@@ -1,0 +1,105 @@
+﻿@model ML.Usuario
+@{
+        ViewBag.Title = "GetAll";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Usuarios</h2>
+        </div>
+        <div class="col-md-12">
+            <h5>Añade, edita, elimina de la tabla</h5>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 offset-md-11">
+            @Html.ActionLink(" +", "Form", "Usuario", new { @class = "btn btn-outline-success bi-person-fill-add" })
+        </div>
+    </div>
+    <div>
+        @if (Model.Usuarios != null)
+        {
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Editar</th>
+                            <th>Estatus</th>
+                            <th>UserName</th>
+                            <th>Nombre</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Email</th>
+                            <th>Sexo</th>
+                            <th>Celular</th>
+                            <th>F. Nacimiento</th>
+                            <th>Rol</th>
+                            <th>Imagen</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Usuario usuario in Model.Usuarios)
+                        {
+                        <tr>
+                            <td class="text-center"><a class="btn btn-primary bi bi-pencil-fill " href="@Url.Action("Form", "Usuario", new {IdUsuario = usuario.IdUsuario})"><i class=""></i></a></td>
+
+                            @if (usuario.Estatus)
+                            {
+                            <td style="text-align: center; vertical-align: middle;">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked onchange="ChangeStatus(@usuario.IdUsuario, this)">
+                                </div>
+                            </td>
+                            }
+                            else
+                            {
+                            <td style="text-align: center; vertical-align: middle;">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onchange="ChangeStatus(@usuario.IdUsuario, this);">
+                                </div>
+                            </td>
+                            }
+
+                            <td>@usuario.UserName</td>
+                            <td>@usuario.Nombre</td>
+                            <td>@usuario.ApellidoPaterno</td>
+                            <td>@usuario.ApellidoMaterno</td>
+                            <td>@usuario.Email</td>
+                            <td>@usuario.Sexo</td>
+                            <td>@usuario.Celular</td>
+                            <td>@usuario.FechaNacimiento</td>
+                            <td>@usuario.Rol.Nombre</td>
+                            <td>
+                                @if (usuario.Imagen == null)
+                                {
+                                <img src="~/images/DefaultImage.png" id="imgUsuario" style="  width:100px; height:100px; " />
+                                }
+                                else
+                                {
+                                <img src="data:image/png;base64,@Convert.ToBase64String(usuario.Imagen)" id="imgUsuario" style="  width:100px; height:100px; " />
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-danger bi bi-trash" onclick="return confirm('¿Estas seguro de eliminar este usuario?');" href="@Url.Action("Delete", "Usuario", new {IdUsuario = usuario.IdUsuario})"><i class=""></i></a>
+                            </td>
+                        </tr>
+
+                         }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        }
+        else
+        {
+        <div class="alert alert-danger" role="alert">
+            <h3>No se han podido recuperar resultados</h3>
+        </div>
+        }
+    </div>
+</div>

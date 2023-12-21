@@ -1,0 +1,80 @@
+﻿@model ML.Proveedor
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Proveedores</h2>
+        </div>
+        <div class="col-md-12">
+            <h5>Añade, edita, elimina de la tabla</h5>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 offset-md-11">
+            @Html.ActionLink(" +", "Form", "Proveedor", new { @class = "btn btn-outline-success bi-person-fill-add" })
+        </div>
+    </div>
+    <div>
+        @if (Model.Proveedores.Count > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Editar</th>
+                                <th>Nombre</th>
+                                <th>Direccion</th>
+                                <th>Telefono</th>
+                                <th>Email</th>
+                                <th>SitioWeb</th>
+                                <th>Imagen</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (ML.Proveedor proveedor in Model.Proveedores)
+                            {
+                                <tr>
+                                    <td class="text-center"><a class="btn btn-primary bi bi-pencil-fill " href="@Url.Action("Form", "Proveedor", new {IdProveedor = proveedor.IdProveedor})"><i class=""></i></a></td>
+
+
+                                    <td>@proveedor.Nombre</td>
+                                    <td>@proveedor.Direccion</td>
+                                    <td>@proveedor.Telefono</td>
+                                    <td>@proveedor.Email</td>
+                                    <td>@proveedor.SitioWeb</td>
+                                    <td>
+                                        @if (proveedor.Imagen == null)
+                                        {
+                                            <img src="~/images/DefaultImage.png" id="imgProveedor" style="  width:100px; height:100px; " />
+                                        }
+                                        else
+                                        {
+                                            <img src="data:image/png;base64,@Convert.ToBase64String(proveedor.Imagen)" id="imgProveedor" style="  width:100px; height:100px; " />
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="btn btn-danger bi bi-trash" onclick="return confirm('¿Estas seguro de eliminar este proveedor?');" href="@Url.Action("Delete", "Proveeedor", new {IdProveedor = proveedor.IdProveedor})"><i class=""></i></a>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                <h3>No se han podido recuperar resultados</h3>
+            </div>
+        }
+    </div>
+</div>

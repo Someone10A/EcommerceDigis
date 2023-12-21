@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="98ed9463ac8341f98384a652dcaa2bdf" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="EcommerceDigisModel.Direccion" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.Estado" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.Municipio" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.Rol" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__Direccion__IdMun__160F4887" ManuallyRouted="false" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__Municipio__IdEst__5FB337D6" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.Usuario" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__Direccion__IdUsu__17036CC0" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__Usuario__IdRol__03F0984C" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.Categoria" Width="1.5" PointX="5.375" PointY="7.125" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.Producto" Width="1.5" PointX="9.875" PointY="6" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.Proveedor" Width="1.5" PointX="7.625" PointY="2.75" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.SubCategoria" Width="1.5" PointX="7.625" PointY="6.75" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__SubCatego__IdCat__51300E55" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__Producto__IdProv__634EBE90" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__Producto__IdSubC__625A9A57" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

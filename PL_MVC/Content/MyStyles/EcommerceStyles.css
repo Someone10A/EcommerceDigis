@@ -1,0 +1,97 @@
+﻿.layoutAzul {
+    background-color: #145873;
+}
+
+.textoLayout {
+    display: block;
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+    font-size: var(--bs-nav-link-font-size);
+    font-weight: var(--bs-nav-link-font-weight);
+    color: white;
+    text-decoration: none;
+    background: none;
+    border: 0;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    font-weight: bold;
+}
+
+.logoImg {
+    display: flex;
+    width: 100px;
+    height: 100px;
+}
+.cardProduct {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    margin: 10px 0 15px 0;
+}
+
+    .cardProduct:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    }
+
+.cardProductHead {
+
+    padding: 10px;
+    text-align: center;
+    background-color: #f8f8f8;
+    width: 250px;
+    height: 250px;
+    display: block;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .cardProductHead img {
+        
+        bottom: auto 0 0 0;
+        max-width: 230px; 
+        max-height: 230px;
+        transition: transform 0.3s ease-in-out; 
+    }
+
+        
+        .cardProductHead img:hover {
+            transform: scale(1.1); 
+        }
+
+
+.cardProductBody {
+    
+    height:160px;
+    padding: 10px;
+}
+
+
+.nombreProducto {
+    display:block;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    width:auto;
+    height:80px;
+    content: unset;
+}
+
+
+.precioProducto {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    width: 100%;
+}
+
+    .precioProducto p {
+        float: right;
+        color: #080;
+    }
+
+
+#containerSession ul {
+    display: none;
+}
