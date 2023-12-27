@@ -24,11 +24,18 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between textoLayout w-100">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Principal", "Index", "Home", new { area = "" }, new { @class = "text-white nav-link" })</li>
-                    @if (Session["Rol"].ToString() == "1")
+                    @{
+                       
+
+                        var sesionActiva = (ML.Sesion)Session["SesionActiva"];
+                    }
+
+
+                    @if (Session["SesionActiva"] != null && sesionActiva.IdRol == 1)
                     {
                         <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "text-white nav-link" })</li>
                     }
-                    else if (Session["Rol"].ToString() == "2")
+                    else if (Session["SesionActiva"] != null && sesionActiva.IdRol == 2)
                     {
                         <li>@Html.ActionLink("Usuarios", "GetAll", "Usuario", new { area = "" }, new { @class = "text-white nav-link" })</li>
                         <li>@Html.ActionLink("Productos", "GetAll", "Producto", new { area = "" }, new { @class = "text-white nav-link" })</li>
@@ -44,30 +51,26 @@
                             <li>@Html.ActionLink("Registrarte", "Login", "Registrate", new { area = "" }, new { @class = "text-white nav-link" })</li>
                             <li>@Html.ActionLink("Iniciar Sesion", "Login", "Home", new { area = "" }, new { @class = "text-white nav-link" })</li>
                         </ul>
-                    </div>  
-                   
+                    </div>
+
                 }
                 else
                 {
-                    string Username = Session["UserName"].ToString();
-                    string sesionActiva = Session["SesionActiva"].ToString();
-
-                    
                     <div id="containerSession">
                         <div class="dropdown">
                             @*<button onclick="toggleOptions()" class="dropbtn">Bienvenido @Username</button>*@
-                            <a class="nav-link align-bottom dropbtn" id="welcomeBtn" onclick="toggleOptions()">Bienvenido @Username</a>
+                            <a class="nav-link align-bottom dropbtn" id="welcomeBtn" onclick="toggleOptions()">Bienvenido @sesionActiva.Nombre</a>
                             <div id="optionsList" class="dropdown-content">
 
 
-                                @if (Session["Rol"].ToString() == "1")
+                                @if (sesionActiva.IdRol == 1)
                                 {
-                                    @Html.ActionLink("Carrito Compra", "Logout", "Home", new { area = "" }, new { @class = "" })
+                                    @Html.ActionLink("Carrito Compra", "Index", "Carrito", new { area = "" }, new { @class = "" })
                                     @Html.ActionLink("Pedidos", "Logout", "Home", new { area = "" }, new { @class = "" })
                                 }
-                                else if (Session["Rol"].ToString() == "2")
+                                else if (sesionActiva.IdRol == 2)
                                 {
-                                    
+
                                 }
                                 @Html.ActionLink("Perfil", "Logout", "Home", new { area = "" }, new { @class = "" })
                                 @Html.ActionLink("Cerrar Sesión", "Logout", "Home", new { area = "" }, new { @class = "" })
@@ -75,7 +78,7 @@
                         </div>
                     </div>
                 }
-                </div>
+            </div>
         </div>
     </nav>
     <div class="container body-content">

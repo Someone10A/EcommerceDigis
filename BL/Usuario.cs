@@ -361,5 +361,37 @@ namespace BL
             }
             return Rol;
         }
+        public static ML.Result GetSesion(string email)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL_EF.EcommerceDigisEntities context = new DL_EF.EcommerceDigisEntities())
+                {
+                    var query = context.GetSesionByEmail(email).FirstOrDefault();
+                    if (query != null)
+                    {
+                        var item = query;
+                        ML.Sesion sesion = new ML.Sesion();
+                        sesion.Nombre = item.Nombre;
+                        sesion.IdRol = item.IdRol.Value;
+                        sesion.IdUsuario = item.IdUsuario;
+
+                        result.Object = sesion;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

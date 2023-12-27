@@ -18,6 +18,8 @@ namespace DL_EF
         public Usuario()
         {
             this.Direccions = new HashSet<Direccion>();
+            this.Carritoes = new HashSet<Carrito>();
+            this.Pedidoes = new HashSet<Pedido>();
         }
     
         public int IdUsuario { get; set; }
@@ -37,5 +39,9 @@ namespace DL_EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Direccion> Direccions { get; set; }
         public virtual Rol Rol { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Carrito> Carritoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pedido> Pedidoes { get; set; }
     }
 }

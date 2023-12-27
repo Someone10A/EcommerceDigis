@@ -14,6 +14,13 @@ namespace DL_EF
     
     public partial class Producto
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Producto()
+        {
+            this.DetalleCarritoes = new HashSet<DetalleCarrito>();
+            this.DetallePedidoes = new HashSet<DetallePedido>();
+        }
+    
         public int IdProducto { get; set; }
         public string Nombre { get; set; }
         public string Marca { get; set; }
@@ -31,5 +38,9 @@ namespace DL_EF
     
         public virtual Proveedor Proveedor { get; set; }
         public virtual SubCategoria SubCategoria { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleCarrito> DetalleCarritoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetallePedido> DetallePedidoes { get; set; }
     }
 }

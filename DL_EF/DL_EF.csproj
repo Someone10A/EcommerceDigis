@@ -53,6 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Carrito.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CarritoDetalleGetByCarrito_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
     <Compile Include="Categoria.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
@@ -60,6 +66,12 @@
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
+    <Compile Include="DetalleCarrito.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DetallePedido.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
     <Compile Include="Direccion.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
@@ -84,10 +96,19 @@
     <Compile Include="EstadoGetAll_Result.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
+    <Compile Include="Estatu.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSesionByEmail_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
     <Compile Include="Municipio.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
     <Compile Include="MunicipioGetByEstado_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
     <Compile Include="Producto.cs">

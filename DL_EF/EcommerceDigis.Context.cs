@@ -36,6 +36,11 @@ namespace DL_EF
         public virtual DbSet<Proveedor> Proveedors { get; set; }
         public virtual DbSet<SubCategoria> SubCategorias { get; set; }
         public virtual DbSet<Producto> Productoes { get; set; }
+        public virtual DbSet<Carrito> Carritoes { get; set; }
+        public virtual DbSet<DetalleCarrito> DetalleCarritoes { get; set; }
+        public virtual DbSet<DetallePedido> DetallePedidoes { get; set; }
+        public virtual DbSet<Estatu> Estatus { get; set; }
+        public virtual DbSet<Pedido> Pedidoes { get; set; }
     
         public virtual int UsuarioDelete(Nullable<int> idUsuario)
         {
@@ -510,6 +515,77 @@ namespace DL_EF
                 new ObjectParameter("IdProveedor", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProveedorById_Result>("ProveedorById", idProveedorParameter);
+        }
+    
+        public virtual int CarritoCreate(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CarritoCreate", idUsuarioParameter);
+        }
+    
+        public virtual int CarritoDetalleAdd(Nullable<int> idCarrito, Nullable<int> idProducto, Nullable<decimal> cantidad)
+        {
+            var idCarritoParameter = idCarrito.HasValue ?
+                new ObjectParameter("IdCarrito", idCarrito) :
+                new ObjectParameter("IdCarrito", typeof(int));
+    
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CarritoDetalleAdd", idCarritoParameter, idProductoParameter, cantidadParameter);
+        }
+    
+        public virtual int CarritoDetalleDelete(Nullable<int> idDetalleCarrito)
+        {
+            var idDetalleCarritoParameter = idDetalleCarrito.HasValue ?
+                new ObjectParameter("IdDetalleCarrito", idDetalleCarrito) :
+                new ObjectParameter("IdDetalleCarrito", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CarritoDetalleDelete", idDetalleCarritoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> CarritoGetByUsuario(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("CarritoGetByUsuario", idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<CarritoDetalleGetByCarrito_Result> CarritoDetalleGetByCarrito(Nullable<int> idCarrito)
+        {
+            var idCarritoParameter = idCarrito.HasValue ?
+                new ObjectParameter("IdCarrito", idCarrito) :
+                new ObjectParameter("IdCarrito", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarritoDetalleGetByCarrito_Result>("CarritoDetalleGetByCarrito", idCarritoParameter);
+        }
+    
+        public virtual int CarritoDelete(Nullable<int> idCarrito)
+        {
+            var idCarritoParameter = idCarrito.HasValue ?
+                new ObjectParameter("IdCarrito", idCarrito) :
+                new ObjectParameter("IdCarrito", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CarritoDelete", idCarritoParameter);
+        }
+    
+        public virtual ObjectResult<GetSesionByEmail_Result> GetSesionByEmail(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSesionByEmail_Result>("GetSesionByEmail", emailParameter);
         }
     }
 }

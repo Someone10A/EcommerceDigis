@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/Content/MyStyles/ProductoStyles.css">
+<script type="text/javascript" src="~/Scripts/PersonalScripts/ProductoGet.js"></script>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -20,13 +21,14 @@
         </div>
         <div class="col-md-4">
             <card class="infoProducto">
+                <p class="visually-hidden" id="IdProducto">@Model.IdProducto</p>
                 <h4>@Model.Nombre</h4>
                 <p>@Model.Descripcion</p>
             </card>
         </div>
         <div class="col-md-4">
             <card class="compraProducto">
-                <h2>Precio: @Model.Precio</h2>
+                <h2>Precio: <p id="PrecioProducto">@Model.Precio</p></h2>
                 <p class="existencias">Existencias: @Model.Stock</p>
                 <div class="row">
                     <div class="input-group">
@@ -51,15 +53,3 @@
         </div>
     </div>
 </div>
-<script>
-    function sumarValor() {
-        document.getElementById('inputValor').stepUp();
-    }
-
-    function restarValor() {
-        var input = document.getElementById('inputValor');
-        if (parseInt(input.value) > 1) {
-            input.stepDown();
-        }
-    }
-</script>

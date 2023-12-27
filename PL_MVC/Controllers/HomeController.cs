@@ -11,10 +11,9 @@ namespace PL_MVC.Controllers
     {
         public ActionResult Index()
         {
-            if (Session["SesionActiva"] == null || Session["SesionActiva"].ToString() == "false")
+            if (Session["SesionActiva"] == null)
             { 
-                Session["SesionActiva"] = "false";
-                Session["Rol"] = 0;
+                Session["SesionActiva"] = null;
             }
            
                 return View();
@@ -67,11 +66,13 @@ namespace PL_MVC.Controllers
                 ML.Result result = BL.Usuario.Login(email, password);
                 if (result.Correct)
                 {
-                    Session["SesionActiva"] = "true";
-                    string resultNombre = BL.Usuario.GetNombre(email);
-                    Session["UserName"] = resultNombre;
-                    int resultRol = BL.Usuario.GetRol(email);
-                    Session["Rol"] = resultRol;
+                    ML.Result resultSesion = BL.Usuario.GetSesion(email);
+                    Session["SesionActiva"] = (ML.Sesion)resultSesion.Object;
+
+                    //string resultNombre = BL.Usuario.GetNombre(email);
+                    //Session["UserName"] = resultNombre;
+                    //int resultRol = BL.Usuario.GetRol(email);
+                    //Session["Rol"] = resultRol;
                     return RedirectToAction("Index");
                 }
                 else
@@ -83,8 +84,7 @@ namespace PL_MVC.Controllers
         }
         public ActionResult Logout()
         {
-            Session["SesionActiva"] = "false";
-            Session["Rol"] = 0;
+            Session["SesionActiva"] = null;
             return RedirectToAction("Index");
         }
     }

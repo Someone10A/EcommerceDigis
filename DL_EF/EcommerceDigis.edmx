@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EcommerceDigisModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Carrito">
+          <Key>
+            <PropertyRef Name="IdCarrito" />
+          </Key>
+          <Property Name="IdCarrito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+        </EntityType>
         <EntityType Name="Categoria">
           <Key>
             <PropertyRef Name="IdCategoria" />
@@ -12,6 +19,25 @@
           <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
           <Property Name="Descripcion" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="DetalleCarrito">
+          <Key>
+            <PropertyRef Name="IdDetalleCarrito" />
+          </Key>
+          <Property Name="IdDetalleCarrito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCarrito" Type="int" />
+          <Property Name="IdProducto" Type="int" />
+          <Property Name="Cantidad" Type="int" />
+        </EntityType>
+        <EntityType Name="DetallePedido">
+          <Key>
+            <PropertyRef Name="IdDetallePedido" />
+          </Key>
+          <Property Name="IdDetallePedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPedido" Type="int" />
+          <Property Name="IdProducto" Type="int" />
+          <Property Name="Cantidad" Type="int" />
+          <Property Name="SubTotal" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Direccion">
           <Key>
@@ -33,6 +59,14 @@
           <Property Name="IdEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="IdEstatus" />
+          </Key>
+          <Property Name="IdEstatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="Municipio">
           <Key>
             <PropertyRef Name="IdMunicipio" />
@@ -40,6 +74,16 @@
           <Property Name="IdMunicipio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdEstado" Type="int" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="IdPedido" />
+          </Key>
+          <Property Name="IdPedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="IdEstatus" Type="int" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -107,6 +151,66 @@
           <Property Name="IdRol" Type="int" />
           <Property Name="UserName" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK__Carrito__IdUsuar__047AA831">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Carrito">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleCa__IdCar__075714DC">
+          <End Role="Carrito" Type="Self.Carrito" Multiplicity="0..1" />
+          <End Role="DetalleCarrito" Type="Self.DetalleCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrito">
+              <PropertyRef Name="IdCarrito" />
+            </Principal>
+            <Dependent Role="DetalleCarrito">
+              <PropertyRef Name="IdCarrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleCa__IdPro__084B3915">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="DetalleCarrito" Type="Self.DetalleCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetalleCarrito">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetallePe__IdPed__00AA174D">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="IdPedido" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="IdPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetallePe__IdPro__019E3B86">
+          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+          <End Role="DetallePedido" Type="Self.DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Direccion__IdMun__160F4887">
           <End Role="Municipio" Type="Self.Municipio" Multiplicity="0..1" />
           <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
@@ -140,6 +244,30 @@
             </Principal>
             <Dependent Role="Municipio">
               <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedido__IdEstatu__7DCDAAA2">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="IdEstatus" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedido__IdUsuari__7CD98669">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -191,6 +319,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CarritoCreate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CarritoDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCarrito" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CarritoDetalleAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCarrito" Type="int" Mode="In" />
+          <Parameter Name="IdProducto" Type="int" Mode="In" />
+          <Parameter Name="Cantidad" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="CarritoDetalleDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdDetalleCarrito" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CarritoDetalleGetByCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCarrito" Type="int" Mode="In" />
+        </Function>
+        <Function Name="CarritoGetByUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
         <Function Name="CategoriaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ConfirmPassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="int" Mode="In" />
@@ -204,6 +352,9 @@
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetRolByEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetSesionByEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="MunicipioGetByEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -323,15 +474,40 @@
           <Parameter Name="IdMunicipio" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="EcommerceDigisModelStoreContainer">
+          <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleCarrito" EntityType="Self.DetalleCarrito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetallePedido" EntityType="Self.DetallePedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Direccion" EntityType="Self.Direccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Municipio" EntityType="Self.Municipio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategoria" EntityType="Self.SubCategoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Carrito__IdUsuar__047AA831" Association="Self.FK__Carrito__IdUsuar__047AA831">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Carrito" EntitySet="Carrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleCa__IdCar__075714DC" Association="Self.FK__DetalleCa__IdCar__075714DC">
+            <End Role="Carrito" EntitySet="Carrito" />
+            <End Role="DetalleCarrito" EntitySet="DetalleCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleCa__IdPro__084B3915" Association="Self.FK__DetalleCa__IdPro__084B3915">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetalleCarrito" EntitySet="DetalleCarrito" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetallePe__IdPed__00AA174D" Association="Self.FK__DetallePe__IdPed__00AA174D">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetallePe__IdPro__019E3B86" Association="Self.FK__DetallePe__IdPro__019E3B86">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="DetallePedido" EntitySet="DetallePedido" />
+          </AssociationSet>
           <AssociationSet Name="FK__Direccion__IdMun__160F4887" Association="Self.FK__Direccion__IdMun__160F4887">
             <End Role="Municipio" EntitySet="Municipio" />
             <End Role="Direccion" EntitySet="Direccion" />
@@ -343,6 +519,14 @@
           <AssociationSet Name="FK__Municipio__IdEst__5FB337D6" Association="Self.FK__Municipio__IdEst__5FB337D6">
             <End Role="Estado" EntitySet="Estado" />
             <End Role="Municipio" EntitySet="Municipio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedido__IdEstatu__7DCDAAA2" Association="Self.FK__Pedido__IdEstatu__7DCDAAA2">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedido__IdUsuari__7CD98669" Association="Self.FK__Pedido__IdUsuari__7CD98669">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Pedido" EntitySet="Pedido" />
           </AssociationSet>
           <AssociationSet Name="FK__Producto__IdProv__634EBE90" Association="Self.FK__Producto__IdProv__634EBE90">
             <End Role="Proveedor" EntitySet="Proveedor" />
@@ -597,7 +781,63 @@
             <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ProveedorById" ReturnType="Collection(EcommerceDigisModel.ProveedorById_Result)">
-            <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
+          <Parameter Name="IdProveedor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Carritoes" EntityType="EcommerceDigisModel.Carrito" />
+          <EntitySet Name="DetalleCarritoes" EntityType="EcommerceDigisModel.DetalleCarrito" />
+          <EntitySet Name="DetallePedidoes" EntityType="EcommerceDigisModel.DetallePedido" />
+          <EntitySet Name="Estatus" EntityType="EcommerceDigisModel.Estatu" />
+          <EntitySet Name="Pedidoes" EntityType="EcommerceDigisModel.Pedido" />
+          <AssociationSet Name="FK__Carrito__IdUsuar__047AA831" Association="EcommerceDigisModel.FK__Carrito__IdUsuar__047AA831">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Carrito" EntitySet="Carritoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleCa__IdCar__075714DC" Association="EcommerceDigisModel.FK__DetalleCa__IdCar__075714DC">
+            <End Role="Carrito" EntitySet="Carritoes" />
+            <End Role="DetalleCarrito" EntitySet="DetalleCarritoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetalleCa__IdPro__084B3915" Association="EcommerceDigisModel.FK__DetalleCa__IdPro__084B3915">
+            <End Role="Producto" EntitySet="Productoes" />
+            <End Role="DetalleCarrito" EntitySet="DetalleCarritoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetallePe__IdPed__00AA174D" Association="EcommerceDigisModel.FK__DetallePe__IdPed__00AA174D">
+            <End Role="Pedido" EntitySet="Pedidoes" />
+            <End Role="DetallePedido" EntitySet="DetallePedidoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DetallePe__IdPro__019E3B86" Association="EcommerceDigisModel.FK__DetallePe__IdPro__019E3B86">
+            <End Role="Producto" EntitySet="Productoes" />
+            <End Role="DetallePedido" EntitySet="DetallePedidoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedido__IdEstatu__7DCDAAA2" Association="EcommerceDigisModel.FK__Pedido__IdEstatu__7DCDAAA2">
+            <End Role="Estatu" EntitySet="Estatus" />
+            <End Role="Pedido" EntitySet="Pedidoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pedido__IdUsuari__7CD98669" Association="EcommerceDigisModel.FK__Pedido__IdUsuari__7CD98669">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Pedido" EntitySet="Pedidoes" />
+          </AssociationSet>
+          <FunctionImport Name="CarritoCreate">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CarritoDetalleAdd">
+            <Parameter Name="IdCarrito" Mode="In" Type="Int32" />
+            <Parameter Name="IdProducto" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="CarritoDetalleDelete">
+          <Parameter Name="IdDetalleCarrito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CarritoGetByUsuario" ReturnType="Collection(Int32)">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CarritoDetalleGetByCarrito" ReturnType="Collection(EcommerceDigisModel.CarritoDetalleGetByCarrito_Result)">
+          <Parameter Name="IdCarrito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CarritoDelete">
+          <Parameter Name="IdCarrito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSesionByEmail" ReturnType="Collection(EcommerceDigisModel.GetSesionByEmail_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Usuario">
@@ -619,6 +859,8 @@
           <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Direccions" Relationship="EcommerceDigisModel.FK__Direccion__IdUsu__17036CC0" FromRole="Usuario" ToRole="Direccion" />
           <NavigationProperty Name="Rol" Relationship="EcommerceDigisModel.FK__Usuario__IdRol__03F0984C" FromRole="Usuario" ToRole="Rol" />
+          <NavigationProperty Name="Carritoes" Relationship="EcommerceDigisModel.FK__Carrito__IdUsuar__047AA831" FromRole="Usuario" ToRole="Carrito" />
+          <NavigationProperty Name="Pedidoes" Relationship="EcommerceDigisModel.FK__Pedido__IdUsuari__7CD98669" FromRole="Usuario" ToRole="Pedido" />
         </EntityType>
         <Association Name="FK__Direccion__IdUsu__17036CC0">
           <End Type="EcommerceDigisModel.Usuario" Role="Usuario" Multiplicity="0..1" />
@@ -818,6 +1060,8 @@
           <Property Name="Vendidos" Type="Int32" />
           <NavigationProperty Name="Proveedor" Relationship="EcommerceDigisModel.FK__Producto__IdProv__634EBE90" FromRole="Producto" ToRole="Proveedor" />
           <NavigationProperty Name="SubCategoria" Relationship="EcommerceDigisModel.FK__Producto__IdSubC__625A9A57" FromRole="Producto" ToRole="SubCategoria" />
+          <NavigationProperty Name="DetalleCarritoes" Relationship="EcommerceDigisModel.FK__DetalleCa__IdPro__084B3915" FromRole="Producto" ToRole="DetalleCarrito" />
+          <NavigationProperty Name="DetallePedidoes" Relationship="EcommerceDigisModel.FK__DetallePe__IdPro__019E3B86" FromRole="Producto" ToRole="DetallePedido" />
         </EntityType>
         <Association Name="FK__Producto__IdProv__634EBE90">
           <End Type="EcommerceDigisModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
@@ -889,6 +1133,159 @@
           <Property Type="String" Name="Telefono" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SitioWeb" Nullable="true" MaxLength="100" />
+          <Property Type="Binary" Name="Imagen" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="Carrito">
+          <Key>
+            <PropertyRef Name="IdCarrito" />
+          </Key>
+          <Property Name="IdCarrito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <NavigationProperty Name="Usuario" Relationship="EcommerceDigisModel.FK__Carrito__IdUsuar__047AA831" FromRole="Carrito" ToRole="Usuario" />
+          <NavigationProperty Name="DetalleCarritoes" Relationship="EcommerceDigisModel.FK__DetalleCa__IdCar__075714DC" FromRole="Carrito" ToRole="DetalleCarrito" />
+        </EntityType>
+        <EntityType Name="DetalleCarrito">
+          <Key>
+            <PropertyRef Name="IdDetalleCarrito" />
+          </Key>
+          <Property Name="IdDetalleCarrito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCarrito" Type="Int32" />
+          <Property Name="IdProducto" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" />
+          <NavigationProperty Name="Carrito" Relationship="EcommerceDigisModel.FK__DetalleCa__IdCar__075714DC" FromRole="DetalleCarrito" ToRole="Carrito" />
+          <NavigationProperty Name="Producto" Relationship="EcommerceDigisModel.FK__DetalleCa__IdPro__084B3915" FromRole="DetalleCarrito" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="DetallePedido">
+          <Key>
+            <PropertyRef Name="IdDetallePedido" />
+          </Key>
+          <Property Name="IdDetallePedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPedido" Type="Int32" />
+          <Property Name="IdProducto" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="SubTotal" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Pedido" Relationship="EcommerceDigisModel.FK__DetallePe__IdPed__00AA174D" FromRole="DetallePedido" ToRole="Pedido" />
+          <NavigationProperty Name="Producto" Relationship="EcommerceDigisModel.FK__DetallePe__IdPro__019E3B86" FromRole="DetallePedido" ToRole="Producto" />
+        </EntityType>
+        <EntityType Name="Estatu">
+          <Key>
+            <PropertyRef Name="IdEstatus" />
+          </Key>
+          <Property Name="IdEstatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pedidoes" Relationship="EcommerceDigisModel.FK__Pedido__IdEstatu__7DCDAAA2" FromRole="Estatu" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="IdPedido" />
+          </Key>
+          <Property Name="IdPedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="IdEstatus" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="DetallePedidoes" Relationship="EcommerceDigisModel.FK__DetallePe__IdPed__00AA174D" FromRole="Pedido" ToRole="DetallePedido" />
+          <NavigationProperty Name="Estatu" Relationship="EcommerceDigisModel.FK__Pedido__IdEstatu__7DCDAAA2" FromRole="Pedido" ToRole="Estatu" />
+          <NavigationProperty Name="Usuario" Relationship="EcommerceDigisModel.FK__Pedido__IdUsuari__7CD98669" FromRole="Pedido" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK__Carrito__IdUsuar__047AA831">
+          <End Type="EcommerceDigisModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.Carrito" Role="Carrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Carrito">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleCa__IdCar__075714DC">
+          <End Type="EcommerceDigisModel.Carrito" Role="Carrito" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.DetalleCarrito" Role="DetalleCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrito">
+              <PropertyRef Name="IdCarrito" />
+            </Principal>
+            <Dependent Role="DetalleCarrito">
+              <PropertyRef Name="IdCarrito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetalleCa__IdPro__084B3915">
+          <End Type="EcommerceDigisModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.DetalleCarrito" Role="DetalleCarrito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetalleCarrito">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetallePe__IdPed__00AA174D">
+          <End Type="EcommerceDigisModel.Pedido" Role="Pedido" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.DetallePedido" Role="DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="IdPedido" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="IdPedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DetallePe__IdPro__019E3B86">
+          <End Type="EcommerceDigisModel.Producto" Role="Producto" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.DetallePedido" Role="DetallePedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="DetallePedido">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedido__IdEstatu__7DCDAAA2">
+          <End Type="EcommerceDigisModel.Estatu" Role="Estatu" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatu">
+              <PropertyRef Name="IdEstatus" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pedido__IdUsuari__7CD98669">
+          <End Type="EcommerceDigisModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="EcommerceDigisModel.Pedido" Role="Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="CarritoDetalleGetByCarrito_Result">
+          <Property Type="Int32" Name="IdDetalleCarrito" Nullable="false" />
+          <Property Type="Int32" Name="IdProducto" Nullable="true" />
+          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="300" />
+          <Property Type="Decimal" Name="Precio" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Binary" Name="Imagen" Nullable="true" />
+          <Property Type="Int32" Name="Stock" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetSesionByEmail_Result">
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="IdRol" Nullable="true" />
           <Property Type="Binary" Name="Imagen" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -1226,6 +1623,83 @@
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="SitioWeb" ColumnName="SitioWeb" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Carritoes">
+            <EntityTypeMapping TypeName="EcommerceDigisModel.Carrito">
+              <MappingFragment StoreEntitySet="Carrito">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdCarrito" ColumnName="IdCarrito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleCarritoes">
+            <EntityTypeMapping TypeName="EcommerceDigisModel.DetalleCarrito">
+              <MappingFragment StoreEntitySet="DetalleCarrito">
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdCarrito" ColumnName="IdCarrito" />
+                <ScalarProperty Name="IdDetalleCarrito" ColumnName="IdDetalleCarrito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetallePedidoes">
+            <EntityTypeMapping TypeName="EcommerceDigisModel.DetallePedido">
+              <MappingFragment StoreEntitySet="DetallePedido">
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+                <ScalarProperty Name="IdDetallePedido" ColumnName="IdDetallePedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estatus">
+            <EntityTypeMapping TypeName="EcommerceDigisModel.Estatu">
+              <MappingFragment StoreEntitySet="Estatus">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedidoes">
+            <EntityTypeMapping TypeName="EcommerceDigisModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CarritoCreate" FunctionName="EcommerceDigisModel.Store.CarritoCreate" />
+          <FunctionImportMapping FunctionImportName="CarritoDetalleAdd" FunctionName="EcommerceDigisModel.Store.CarritoDetalleAdd" />
+          <FunctionImportMapping FunctionImportName="CarritoDetalleDelete" FunctionName="EcommerceDigisModel.Store.CarritoDetalleDelete" />
+          <FunctionImportMapping FunctionImportName="CarritoGetByUsuario" FunctionName="EcommerceDigisModel.Store.CarritoGetByUsuario" />
+          <FunctionImportMapping FunctionImportName="CarritoDetalleGetByCarrito" FunctionName="EcommerceDigisModel.Store.CarritoDetalleGetByCarrito">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EcommerceDigisModel.CarritoDetalleGetByCarrito_Result">
+                <ScalarProperty Name="IdDetalleCarrito" ColumnName="IdDetalleCarrito" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CarritoDelete" FunctionName="EcommerceDigisModel.Store.CarritoDelete" />
+          <FunctionImportMapping FunctionImportName="GetSesionByEmail" FunctionName="EcommerceDigisModel.Store.GetSesionByEmail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EcommerceDigisModel.GetSesionByEmail_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 <ScalarProperty Name="Imagen" ColumnName="Imagen" />
               </ComplexTypeMapping>
             </ResultMapping>
