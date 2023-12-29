@@ -1,0 +1,55 @@
+﻿﻿@model ML.Pedido
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="~/Scripts/PersonalScripts/Carrito.js"></script>
+
+<div class="container">
+    <h1>Tu lista de pedidos!!!</h1>
+    @if (Model.Pedidos == null)
+    {
+        <div class="alert alert-warning" role="alert">
+            No tienes ningun pedido aun
+        </div>
+    }
+    else
+    {
+        if (Model.Pedidos.Count > 0 || Model.Pedidos != null)
+        {
+            <br>
+            foreach (ML.Pedido pedido in Model.Pedidos)
+            {
+                <div class="row text-center">
+                    <div class="row" style="border:groove; padding:5px; margin:5px;">
+                        <div class="col-md-3">
+
+                            <img src="https://img.freepik.com/vector-gratis/entrega-servicios-envio-linea-seguimiento-pedidos-linea-entrega-hogar-oficina-mensajeria-camion-scooter-bicicleta-envio-paquetes-pines-ubicacion-telefono-movil-repartidor_1150-58774.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1703462400&semt=sph" id="imgProducto" style="  width:100px; height:100px; " />
+
+                        </div>
+                        <div class=" col-md-2">
+                            <p>Estatus @pedido.Estatus.Nombre</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Descripcion: @pedido.Estatus.Descripcion</p>
+                        </div>
+                        <div class=" col-md-2">
+                            <p>Fecha de Encargo: @pedido.Fecha </p>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                Tus pedidos se encuentran vacios
+            </div>
+        }
+    }
+</div>
+

@@ -37,10 +37,10 @@ namespace DL_EF
         public virtual DbSet<SubCategoria> SubCategorias { get; set; }
         public virtual DbSet<Producto> Productoes { get; set; }
         public virtual DbSet<Carrito> Carritoes { get; set; }
-        public virtual DbSet<DetalleCarrito> DetalleCarritoes { get; set; }
-        public virtual DbSet<DetallePedido> DetallePedidoes { get; set; }
         public virtual DbSet<Estatu> Estatus { get; set; }
         public virtual DbSet<Pedido> Pedidoes { get; set; }
+        public virtual DbSet<DetallePedido> DetallePedidoes { get; set; }
+        public virtual DbSet<DetalleCarrito> DetalleCarritoes { get; set; }
     
         public virtual int UsuarioDelete(Nullable<int> idUsuario)
         {
@@ -586,6 +586,33 @@ namespace DL_EF
                 new ObjectParameter("Email", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSesionByEmail_Result>("GetSesionByEmail", emailParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> PedidoGetByUsuario(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("PedidoGetByUsuario", idUsuarioParameter);
+        }
+    
+        public virtual ObjectResult<PedidoGetByIdPedido_Result> PedidoGetByIdPedido(Nullable<int> idPedido)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PedidoGetByIdPedido_Result>("PedidoGetByIdPedido", idPedidoParameter);
+        }
+    
+        public virtual ObjectResult<PedidoDetalleGetByPedido_Result> PedidoDetalleGetByPedido(Nullable<int> idPedido)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PedidoDetalleGetByPedido_Result>("PedidoDetalleGetByPedido", idPedidoParameter);
         }
     }
 }

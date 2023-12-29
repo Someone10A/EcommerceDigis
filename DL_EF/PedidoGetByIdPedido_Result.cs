@@ -10,25 +10,15 @@
 namespace DL_EF
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Pedido
+    public partial class PedidoGetByIdPedido_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Pedido()
-        {
-            this.DetallePedidoes = new HashSet<DetallePedido>();
-        }
-    
         public int IdPedido { get; set; }
         public Nullable<int> IdUsuario { get; set; }
         public Nullable<int> IdEstatus { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
         public Nullable<decimal> Total { get; set; }
-    
-        public virtual Estatu Estatu { get; set; }
-        public virtual Usuario Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetallePedido> DetallePedidoes { get; set; }
     }
 }

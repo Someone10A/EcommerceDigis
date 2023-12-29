@@ -66,7 +66,7 @@
                                 @if (sesionActiva.IdRol == 1)
                                 {
                                     @Html.ActionLink("Carrito Compra", "Index", "Carrito", new { area = "" }, new { @class = "" })
-                                    @Html.ActionLink("Pedidos", "Logout", "Home", new { area = "" }, new { @class = "" })
+                                    @Html.ActionLink("Pedidos", "Index", "Pedido", new { area = "" }, new { @class = "" })
                                 }
                                 else if (sesionActiva.IdRol == 2)
                                 {

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="98ed9463ac8341f98384a652dcaa2bdf" Name="Diagram1" ZoomLevel="93">
+      <Diagram DiagramId="98ed9463ac8341f98384a652dcaa2bdf" Name="Diagram1" ZoomLevel="67">
         <EntityTypeShape EntityType="EcommerceDigisModel.Direccion" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EcommerceDigisModel.Estado" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EcommerceDigisModel.Municipio" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
@@ -22,17 +22,17 @@
         <AssociationConnector Association="EcommerceDigisModel.FK__Producto__IdProv__634EBE90" />
         <AssociationConnector Association="EcommerceDigisModel.FK__Producto__IdSubC__625A9A57" />
         <EntityTypeShape EntityType="EcommerceDigisModel.Carrito" Width="1.5" PointX="4.625" PointY="9.625" />
-        <EntityTypeShape EntityType="EcommerceDigisModel.DetalleCarrito" Width="1.5" PointX="12.5" PointY="8.625" />
-        <EntityTypeShape EntityType="EcommerceDigisModel.DetallePedido" Width="1.5" PointX="12.5" PointY="4" />
         <EntityTypeShape EntityType="EcommerceDigisModel.Estatu" Width="1.5" PointX="7.625" PointY="10.5" />
         <EntityTypeShape EntityType="EcommerceDigisModel.Pedido" Width="1.5" PointX="8.625" PointY="0.5" />
         <AssociationConnector Association="EcommerceDigisModel.FK__Carrito__IdUsuar__047AA831" />
-        <AssociationConnector Association="EcommerceDigisModel.FK__DetalleCa__IdCar__075714DC" />
-        <AssociationConnector Association="EcommerceDigisModel.FK__DetalleCa__IdPro__084B3915" />
-        <AssociationConnector Association="EcommerceDigisModel.FK__DetallePe__IdPed__00AA174D" />
-        <AssociationConnector Association="EcommerceDigisModel.FK__DetallePe__IdPro__019E3B86" />
         <AssociationConnector Association="EcommerceDigisModel.FK__Pedido__IdEstatu__7DCDAAA2" />
         <AssociationConnector Association="EcommerceDigisModel.FK__Pedido__IdUsuari__7CD98669" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.DetallePedido" Width="1.5" PointX="12.125" PointY="3" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__DetallePe__IdPed__00AA174D" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__DetallePe__IdPro__019E3B86" />
+        <EntityTypeShape EntityType="EcommerceDigisModel.DetalleCarrito" Width="1.5" PointX="12.125" PointY="6.5" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__DetalleCa__IdCar__075714DC" />
+        <AssociationConnector Association="EcommerceDigisModel.FK__DetalleCa__IdPro__084B3915" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

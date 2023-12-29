@@ -111,6 +111,12 @@
     <Compile Include="Pedido.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
+    <Compile Include="PedidoDetalleGetByPedido_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PedidoGetByIdPedido_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
     <Compile Include="Producto.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
