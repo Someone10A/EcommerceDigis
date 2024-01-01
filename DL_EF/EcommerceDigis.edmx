@@ -337,6 +337,9 @@
         <Function Name="CarritoDetalleGetByCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdCarrito" Type="int" Mode="In" />
         </Function>
+        <Function Name="CarritoGetByCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCarrito" Type="int" Mode="In" />
+        </Function>
         <Function Name="CarritoGetByUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="int" Mode="In" />
         </Function>
@@ -361,14 +364,40 @@
         <Function Name="MunicipioGetByEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEstado" Type="int" Mode="In" />
         </Function>
+        <Function Name="PedidoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+          <Parameter Name="Fecha" Type="date" Mode="In" />
+        </Function>
+        <Function Name="PedidoDetalleAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPedido" Type="int" Mode="In" />
+          <Parameter Name="IdProducto" Type="int" Mode="In" />
+          <Parameter Name="Cantidad" Type="int" Mode="In" />
+          <Parameter Name="Subtotal" Type="decimal" Mode="In" />
+          <Parameter Name="PrecioVendido" Type="decimal" Mode="In" />
+        </Function>
         <Function Name="PedidoDetalleGetByPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPedido" Type="int" Mode="In" />
         </Function>
         <Function Name="PedidoGetByIdPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPedido" Type="int" Mode="In" />
         </Function>
+        <Function Name="PedidoGetByStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+          <Parameter Name="IdEstatus" Type="int" Mode="In" />
+        </Function>
         <Function Name="PedidoGetByUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PedidoGetPrecios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPedido" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PedidoUpdateEstatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPedido" Type="int" Mode="In" />
+          <Parameter Name="IdEstatus" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PedidoUpdateTotal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPedido" Type="int" Mode="In" />
+          <Parameter Name="Total" Type="decimal" Mode="In" />
         </Function>
         <Function Name="ProductoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="nvarchar" Mode="In" />
@@ -856,7 +885,36 @@
           <Parameter Name="IdPedido" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PedidoDetalleGetByPedido" ReturnType="Collection(EcommerceDigisModel.PedidoDetalleGetByPedido_Result)">
+          <Parameter Name="IdPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="CarritoGetByCarrito" ReturnType="Collection(EcommerceDigisModel.CarritoGetByCarrito_Result)">
+          <Parameter Name="IdCarrito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoAdd">
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="Fecha" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoGetByStatus" ReturnType="Collection(Int32)">
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="IdEstatus" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoDetalleAdd">
             <Parameter Name="IdPedido" Mode="In" Type="Int32" />
+            <Parameter Name="IdProducto" Mode="In" Type="Int32" />
+            <Parameter Name="Cantidad" Mode="In" Type="Int32" />
+            <Parameter Name="Subtotal" Mode="In" Type="Decimal" />
+            <Parameter Name="PrecioVendido" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoGetPrecios" ReturnType="Collection(Decimal)">
+          <Parameter Name="IdPedido" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoUpdateTotal">
+            <Parameter Name="IdPedido" Mode="In" Type="Int32" />
+            <Parameter Name="Total" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoUpdateEstatus">
+            <Parameter Name="IdPedido" Mode="In" Type="Int32" />
+            <Parameter Name="IdEstatus" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Usuario">
@@ -1326,6 +1384,10 @@
           <Property Type="Decimal" Name="PrecioVendido" Nullable="true" Precision="18" Scale="0" />
           <Property Type="Binary" Name="Imagen" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="CarritoGetByCarrito_Result">
+          <Property Type="Int32" Name="IdCarrito" Nullable="false" />
+          <Property Type="Int32" Name="IdUsuario" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1770,6 +1832,20 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CarritoGetByCarrito" FunctionName="EcommerceDigisModel.Store.CarritoGetByCarrito">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EcommerceDigisModel.CarritoGetByCarrito_Result">
+                <ScalarProperty Name="IdCarrito" ColumnName="IdCarrito" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PedidoAdd" FunctionName="EcommerceDigisModel.Store.PedidoAdd" />
+          <FunctionImportMapping FunctionImportName="PedidoGetByStatus" FunctionName="EcommerceDigisModel.Store.PedidoGetByStatus" />
+          <FunctionImportMapping FunctionImportName="PedidoDetalleAdd" FunctionName="EcommerceDigisModel.Store.PedidoDetalleAdd" />
+          <FunctionImportMapping FunctionImportName="PedidoGetPrecios" FunctionName="EcommerceDigisModel.Store.PedidoGetPrecios" />
+          <FunctionImportMapping FunctionImportName="PedidoUpdateTotal" FunctionName="EcommerceDigisModel.Store.PedidoUpdateTotal" />
+          <FunctionImportMapping FunctionImportName="PedidoUpdateEstatus" FunctionName="EcommerceDigisModel.Store.PedidoUpdateEstatus" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

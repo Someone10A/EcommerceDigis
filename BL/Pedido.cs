@@ -144,6 +144,181 @@ namespace BL
             }
             return result;
         }
-       
+        public static ML.Result AddPedido(int IdCarrito)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL_EF.EcommerceDigisEntities context = new DL_EF.EcommerceDigisEntities())
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var consultaCarrito = context.CarritoGetByCarrito(IdCarrito).SingleOrDefault();
+
+                            if (consultaCarrito != null)
+                            {
+                                var itemCarrito = consultaCarrito;
+                                ML.Pedido pedido = new ML.Pedido();
+                                pedido.Usuario = new ML.Usuario();
+                                pedido.Usuario.IdUsuario = itemCarrito.IdUsuario.Value;
+                                pedido.Fecha = DateTime.Now;
+
+                                var crearPedido = context.PedidoAdd(pedido.Usuario.IdUsuario, pedido.Fecha);
+
+                                if (crearPedido > 0)
+                                {
+                                    var consultaPedido = context.PedidoGetByStatus(pedido.Usuario.IdUsuario,1).SingleOrDefault();
+                                    if (consultaPedido != null)
+                                    {
+                                        var idPedido = consultaPedido;
+
+                                        var consultaCarritoDetalle = context.CarritoDetalleGetByCarrito(IdCarrito).ToList();
+
+                                        if (consultaCarritoDetalle != null)
+                                        {
+                                            pedido.DetallesPedidos = new List<object>();
+
+                                            foreach (var itemConsultaDetalle in consultaCarritoDetalle)
+                                            {
+                                                ML.DetallePedido detalle = new ML.DetallePedido();
+                                                detalle.Pedido = new ML.Pedido();
+                                                detalle.Pedido.IdPedido = idPedido.Value;
+                                                detalle.Producto = new ML.Producto();
+                                                detalle.Producto.IdProducto = itemConsultaDetalle.IdProducto.Value;
+
+                                                detalle.Cantidad = itemConsultaDetalle.Cantidad.Value;
+
+                                                detalle.PrecioVendido = BL.Producto.GetPrecio(detalle.Producto.IdProducto);
+
+                                                detalle.SubTotal = detalle.Cantidad * detalle.PrecioVendido;
+
+                                                pedido.DetallesPedidos.Add(detalle);
+                                            }
+
+                                            foreach (var itemAdd in pedido.DetallesPedidos)
+                                            {
+                                                ML.DetallePedido detalleAdd = (ML.DetallePedido)itemAdd;
+                                                var addItem = context.PedidoDetalleAdd(detalleAdd.Pedido.IdPedido, detalleAdd.Producto.IdProducto, detalleAdd.Cantidad, detalleAdd.SubTotal, detalleAdd.PrecioVendido);
+
+                                                if (addItem < 1)
+                                                {
+                                                    throw new ApplicationException("No se añadió algo al pedido, y se canceló la operación");
+                                                }
+                                            }
+
+                                            var vaciarCarrito = context.CarritoDetalleDelete(IdCarrito);
+                                            if (vaciarCarrito > 0)
+                                            {
+                                                var EliminarCarrito = context.CarritoDelete(IdCarrito);
+                                                if (EliminarCarrito > 0)
+                                                {
+                                                    var consultaTotal = context.PedidoGetPrecios(idPedido).ToList();
+
+                                                    if (consultaTotal != null)
+                                                    {
+                                                        decimal total = 0;
+                                                        foreach (var item in consultaTotal)
+                                                        {
+                                                            string precioNormal = item.ToString();
+                                                            total = total + decimal.Parse(precioNormal);
+                                                        }
+
+                                                        var setTotal = context.PedidoUpdateTotal(idPedido, total);
+                                                        if (setTotal > 0)
+                                                        {
+                                                            var updateStatus = context.PedidoUpdateEstatus(idPedido, 2);
+
+                                                            if (updateStatus > 0) 
+                                                            {
+                                                                transaction.Commit();
+                                                                result.Correct = true;
+                                                                result.Message = "Se creó satisfactoriamente el pedido";
+                                                            }
+                                                            else
+                                                            {
+                                                                transaction.Rollback();
+                                                                result.Correct = false;
+                                                                result.Message = "Hubo un error al actualizar el estatus del pedido";
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            transaction.Rollback();
+                                                            result.Correct = false;
+                                                            result.Message = "Hubo un error al asignar el total";
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        transaction.Rollback();
+                                                        result.Correct = false;
+                                                        result.Message = "No pudieron consultarse los precios para asignar el total";
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    transaction.Rollback();
+                                                    result.Correct = false;
+                                                    result.Message = "No pudo eliminarse el carrito";
+                                                }
+                                            }
+                                            else
+                                            {
+                                                transaction.Rollback();
+                                                result.Correct = false;
+                                                result.Message = "No pudo vaciarse el carrito";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            transaction.Rollback();
+                                            result.Correct = false;
+                                            result.Message = "No pudo consultarse el carrito";
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        transaction.Rollback();
+                                        result.Correct = false;
+                                        result.Message = "No pudo consultar el pedido";
+                                    }
+                                }
+                                else
+                                {
+                                    transaction.Rollback();
+                                    result.Correct = false;
+                                    result.Message = "No pudo crear el pedido";
+                                }
+                            }
+                            else
+                            {
+                                transaction.Rollback();
+                                result.Correct = false;
+                                result.Message = "No pudo consultarse el carrito";
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            result.Correct = false;
+                            result.Ex = ex;
+                            result.Message = ex.Message;
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
     }
 }

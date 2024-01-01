@@ -614,5 +614,100 @@ namespace DL_EF
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PedidoDetalleGetByPedido_Result>("PedidoDetalleGetByPedido", idPedidoParameter);
         }
+    
+        public virtual ObjectResult<CarritoGetByCarrito_Result> CarritoGetByCarrito(Nullable<int> idCarrito)
+        {
+            var idCarritoParameter = idCarrito.HasValue ?
+                new ObjectParameter("IdCarrito", idCarrito) :
+                new ObjectParameter("IdCarrito", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarritoGetByCarrito_Result>("CarritoGetByCarrito", idCarritoParameter);
+        }
+    
+        public virtual int PedidoAdd(Nullable<int> idUsuario, Nullable<System.DateTime> fecha)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            var fechaParameter = fecha.HasValue ?
+                new ObjectParameter("Fecha", fecha) :
+                new ObjectParameter("Fecha", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PedidoAdd", idUsuarioParameter, fechaParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> PedidoGetByStatus(Nullable<int> idUsuario, Nullable<int> idEstatus)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            var idEstatusParameter = idEstatus.HasValue ?
+                new ObjectParameter("IdEstatus", idEstatus) :
+                new ObjectParameter("IdEstatus", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("PedidoGetByStatus", idUsuarioParameter, idEstatusParameter);
+        }
+    
+        public virtual int PedidoDetalleAdd(Nullable<int> idPedido, Nullable<int> idProducto, Nullable<int> cantidad, Nullable<decimal> subtotal, Nullable<decimal> precioVendido)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            var idProductoParameter = idProducto.HasValue ?
+                new ObjectParameter("IdProducto", idProducto) :
+                new ObjectParameter("IdProducto", typeof(int));
+    
+            var cantidadParameter = cantidad.HasValue ?
+                new ObjectParameter("Cantidad", cantidad) :
+                new ObjectParameter("Cantidad", typeof(int));
+    
+            var subtotalParameter = subtotal.HasValue ?
+                new ObjectParameter("Subtotal", subtotal) :
+                new ObjectParameter("Subtotal", typeof(decimal));
+    
+            var precioVendidoParameter = precioVendido.HasValue ?
+                new ObjectParameter("PrecioVendido", precioVendido) :
+                new ObjectParameter("PrecioVendido", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PedidoDetalleAdd", idPedidoParameter, idProductoParameter, cantidadParameter, subtotalParameter, precioVendidoParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> PedidoGetPrecios(Nullable<int> idPedido)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("PedidoGetPrecios", idPedidoParameter);
+        }
+    
+        public virtual int PedidoUpdateTotal(Nullable<int> idPedido, Nullable<decimal> total)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            var totalParameter = total.HasValue ?
+                new ObjectParameter("Total", total) :
+                new ObjectParameter("Total", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PedidoUpdateTotal", idPedidoParameter, totalParameter);
+        }
+    
+        public virtual int PedidoUpdateEstatus(Nullable<int> idPedido, Nullable<int> idEstatus)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            var idEstatusParameter = idEstatus.HasValue ?
+                new ObjectParameter("IdEstatus", idEstatus) :
+                new ObjectParameter("IdEstatus", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PedidoUpdateEstatus", idPedidoParameter, idEstatusParameter);
+        }
     }
 }

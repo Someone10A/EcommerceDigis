@@ -284,8 +284,10 @@ namespace BL
                     if (queryEmail != null)
                     {
                         var item = queryEmail;
-                        var queryPassword = context.ConfirmPassword(item, password);
-                        if (queryPassword != null)
+                        var queryPassword = context.ConfirmPassword(item, password).FirstOrDefault();
+
+                        var confirm = queryPassword;
+                        if (confirm != null)
                         {
                             result.Correct = true;
                             result.Message = "Contraseña coincide";

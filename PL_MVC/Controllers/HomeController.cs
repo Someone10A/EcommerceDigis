@@ -66,6 +66,8 @@ namespace PL_MVC.Controllers
                 ML.Result result = BL.Usuario.Login(email, password);
                 if (result.Correct)
                 {
+                    
+
                     ML.Result resultSesion = BL.Usuario.GetSesion(email);
                     Session["SesionActiva"] = (ML.Sesion)resultSesion.Object;
 
@@ -73,10 +75,13 @@ namespace PL_MVC.Controllers
                     //Session["UserName"] = resultNombre;
                     //int resultRol = BL.Usuario.GetRol(email);
                     //Session["Rol"] = resultRol;
+
+
                     return RedirectToAction("Index");
                 }
                 else
                 {
+                    ViewBag.Error = "La contraseña no coincide";
                     return View();
                 }
                 

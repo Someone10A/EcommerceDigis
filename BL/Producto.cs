@@ -275,5 +275,39 @@ namespace BL
             }
             return result;
         }
+
+        public static decimal GetPrecio(int idProducto)
+        {
+            decimal result = 0;
+            try
+            {
+                using (DL_EF.EcommerceDigisEntities context = new DL_EF.EcommerceDigisEntities())
+                {
+                    var query = context.ProductoGetById(idProducto).FirstOrDefault();
+
+                    if (query != null)
+                    {
+                        var item = query;
+
+                        ML.Producto producto = new ML.Producto();
+
+                        producto.Precio = item.Precio.Value;
+
+                        result = producto.Precio;
+                    }
+                    else
+                    {
+                       
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+               
+                //throw;
+            }
+
+            return result;
+        }
     }
 }

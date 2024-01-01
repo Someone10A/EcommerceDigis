@@ -59,6 +59,9 @@
     <Compile Include="CarritoDetalleGetByCarrito_Result.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
+    <Compile Include="CarritoGetByCarrito_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
     <Compile Include="Categoria.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
