@@ -55,6 +55,7 @@
     <Compile Include="Categoria.cs" />
     <Compile Include="DetalleCarrito.cs" />
     <Compile Include="Estado.cs" />
+    <Compile Include="Estatus.cs" />
     <Compile Include="Municipio.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="Producto.cs" />

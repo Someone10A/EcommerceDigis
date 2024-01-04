@@ -195,7 +195,8 @@ namespace BL
                             producto.Proveedor.IdProveedor = item.IdProveedor != null ? item.IdProveedor.Value : 0;
                             producto.Proveedor.Nombre = item.NombreProveedor != null ? item.NombreProveedor : "Sin proveedor registrado";
                             producto.EnCurso = item.EnCurso.Value;
-
+                            decimal dolar = 0.058m;
+                            producto.PrecioDolares = Math.Round(producto.Precio * dolar,2);
                             result.Object = producto;
                         
                         result.Correct = true;

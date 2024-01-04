@@ -37,7 +37,7 @@ namespace BL
                                 pedido.Fecha = itemResultadoPedido.Fecha.Value;
                                 pedido.Total = itemResultadoPedido.Total.Value;
 
-                                
+
                                 result.Object = pedidoGeneral;
                                 result.Correct = true;
                                 result.Message = "Pedidos Consultados";
@@ -208,7 +208,7 @@ namespace BL
                                                 }
                                             }
 
-                                            var vaciarCarrito = context.CarritoDetalleDelete(IdCarrito);
+                                            var vaciarCarrito = context.CarritoEmpty(IdCarrito);
                                             if (vaciarCarrito > 0)
                                             {
                                                 var EliminarCarrito = context.CarritoDelete(IdCarrito);
@@ -317,6 +317,52 @@ namespace BL
                 result.Correct = false;
                 result.Ex = ex;
                 result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public static ML.Result GetAll()
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL_EF.EcommerceDigisEntities context = new DL_EF.EcommerceDigisEntities())
+                {
+                    var query = context.PedidoGetAll().ToList();
+                    if (query != null)
+                    {
+                        result.Objects = new List<object>();
+                        foreach (var itemResultadoPedido in query)
+                        {
+                            ML.Pedido pedido = new ML.Pedido();
+
+                            pedido.IdPedido = itemResultadoPedido.IdPedido;
+                            pedido.Usuario = new ML.Usuario();
+                            pedido.Usuario.IdUsuario = itemResultadoPedido.IdUsuario.Value;
+                            pedido.Estatus = new ML.Estatus();
+                            pedido.Estatus.IdEstatus = itemResultadoPedido.IdEstatus.Value;
+                            pedido.Estatus.Nombre = itemResultadoPedido.Nombre;
+                            pedido.Estatus.Descripcion = itemResultadoPedido.Descripcion;
+                            pedido.Fecha = itemResultadoPedido.Fecha.Value;
+                            pedido.Total = itemResultadoPedido.Total.Value;
+
+                            result.Objects.Add(pedido);
+                        }
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.Message = "No se pudieron consultar los Pedidos";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.Message = ex.Message;
+                //throw;
             }
             return result;
         }

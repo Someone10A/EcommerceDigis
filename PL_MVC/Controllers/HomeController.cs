@@ -56,6 +56,10 @@ namespace PL_MVC.Controllers
         }
         public ActionResult Login(string email, string password)
         {
+            if (email == null || password == null)
+            {
+                return View();
+            }
             if (email == "" || password == "")
             {
                 ViewBag.Error = "Debes llenar todos los campos";

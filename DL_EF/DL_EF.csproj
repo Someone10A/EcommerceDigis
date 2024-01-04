@@ -102,6 +102,9 @@
     <Compile Include="Estatu.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
+    <Compile Include="EstatusGetAll_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetSesionByEmail_Result.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
@@ -115,6 +118,9 @@
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
     <Compile Include="PedidoDetalleGetByPedido_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PedidoGetAll_Result.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
     <Compile Include="PedidoGetByIdPedido_Result.cs">

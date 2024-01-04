@@ -14,6 +14,7 @@ namespace ML
         public string Descripcion { get; set; }
         public int Stock { get; set; }
         public decimal Precio { get; set; }
+        public decimal PrecioDolares { get; set; }
         public int Valoraciones { get; set; }
         public string Comentarios { get; set; }
         public string KeyWords { get; set; }

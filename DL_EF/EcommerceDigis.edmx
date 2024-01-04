@@ -337,6 +337,9 @@
         <Function Name="CarritoDetalleGetByCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdCarrito" Type="int" Mode="In" />
         </Function>
+        <Function Name="CarritoEmpty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCarrito" Type="int" Mode="In" />
+        </Function>
         <Function Name="CarritoGetByCarrito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdCarrito" Type="int" Mode="In" />
         </Function>
@@ -352,6 +355,7 @@
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
         <Function Name="EstadoGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="EstatusGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetNombreByEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="varchar" Mode="In" />
         </Function>
@@ -378,6 +382,7 @@
         <Function Name="PedidoDetalleGetByPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPedido" Type="int" Mode="In" />
         </Function>
+        <Function Name="PedidoGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PedidoGetByIdPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPedido" Type="int" Mode="In" />
         </Function>
@@ -916,6 +921,11 @@
             <Parameter Name="IdPedido" Mode="In" Type="Int32" />
             <Parameter Name="IdEstatus" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="PedidoGetAll" ReturnType="Collection(EcommerceDigisModel.PedidoGetAll_Result)" />
+          <FunctionImport Name="EstatusGetAll" ReturnType="Collection(EcommerceDigisModel.EstatusGetAll_Result)" />
+          <FunctionImport Name="CarritoEmpty">
+            <Parameter Name="IdCarrito" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -1388,6 +1398,20 @@
           <Property Type="Int32" Name="IdCarrito" Nullable="false" />
           <Property Type="Int32" Name="IdUsuario" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="PedidoGetAll_Result">
+          <Property Type="Int32" Name="IdPedido" Nullable="false" />
+          <Property Type="Int32" Name="IdUsuario" Nullable="true" />
+          <Property Type="Int32" Name="IdEstatus" Nullable="true" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="150" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" />
+          <Property Type="Decimal" Name="Total" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="EstatusGetAll_Result">
+          <Property Type="Int32" Name="IdEstatus" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="150" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1846,6 +1870,29 @@
           <FunctionImportMapping FunctionImportName="PedidoGetPrecios" FunctionName="EcommerceDigisModel.Store.PedidoGetPrecios" />
           <FunctionImportMapping FunctionImportName="PedidoUpdateTotal" FunctionName="EcommerceDigisModel.Store.PedidoUpdateTotal" />
           <FunctionImportMapping FunctionImportName="PedidoUpdateEstatus" FunctionName="EcommerceDigisModel.Store.PedidoUpdateEstatus" />
+          <FunctionImportMapping FunctionImportName="PedidoGetAll" FunctionName="EcommerceDigisModel.Store.PedidoGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EcommerceDigisModel.PedidoGetAll_Result">
+                <ScalarProperty Name="IdPedido" ColumnName="IdPedido" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EstatusGetAll" FunctionName="EcommerceDigisModel.Store.EstatusGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EcommerceDigisModel.EstatusGetAll_Result">
+                <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CarritoEmpty" FunctionName="EcommerceDigisModel.Store.CarritoEmpty" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

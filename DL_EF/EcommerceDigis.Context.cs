@@ -709,5 +709,24 @@ namespace DL_EF
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PedidoUpdateEstatus", idPedidoParameter, idEstatusParameter);
         }
+    
+        public virtual ObjectResult<PedidoGetAll_Result> PedidoGetAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PedidoGetAll_Result>("PedidoGetAll");
+        }
+    
+        public virtual ObjectResult<EstatusGetAll_Result> EstatusGetAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<EstatusGetAll_Result>("EstatusGetAll");
+        }
+    
+        public virtual int CarritoEmpty(Nullable<int> idCarrito)
+        {
+            var idCarritoParameter = idCarrito.HasValue ?
+                new ObjectParameter("IdCarrito", idCarrito) :
+                new ObjectParameter("IdCarrito", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CarritoEmpty", idCarritoParameter);
+        }
     }
 }

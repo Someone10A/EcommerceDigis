@@ -28,7 +28,8 @@
         </div>
         <div class="col-md-4">
             <card class="compraProducto">
-                <h2>Precio: <p id="PrecioProducto">@Model.Precio</p></h2>
+                <h2>Precio MXN: $<p id="PrecioProducto">@Model.Precio</p></h2>
+                <p>USD: $@Model.PrecioDolares</p>
                 <p class="existencias">Existencias: @Model.Stock</p>
                 <div class="row">
                     <div class="input-group">
@@ -45,7 +46,7 @@
                 <div class="row">
                     <button class="btn btn-info col-md-4 form-control" onclick="agregarAlCarrito('@Model.IdProducto')">Agregar al carrito</button>
                     <p></p>
-                    <button class="btn btn-info col-md-4 form-control" onclick="comprarAhora('@Model.IdProducto')">Comprar ahora</button>
+                    @*<button class="btn btn-info col-md-4 form-control" onclick="comprarAhora('@Model.IdProducto')">Comprar ahora</button>*@
 
                 </div>
                 

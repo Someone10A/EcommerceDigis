@@ -40,6 +40,7 @@
                         <li>@Html.ActionLink("Usuarios", "GetAll", "Usuario", new { area = "" }, new { @class = "text-white nav-link" })</li>
                         <li>@Html.ActionLink("Productos", "GetAll", "Producto", new { area = "" }, new { @class = "text-white nav-link" })</li>
                         <li>@Html.ActionLink("Proveedores", "GetAll", "Proveedor", new { area = "" }, new { @class = "text-white nav-link" })</li>
+                        <li>@Html.ActionLink("Pedidos", "GetAll", "PedidoAdmin", new { area = "" }, new { @class = "text-white nav-link" })</li>
                     }
 
 
@@ -66,13 +67,13 @@
                                 @if (sesionActiva.IdRol == 1)
                                 {
                                     @Html.ActionLink("Carrito Compra", "Index", "Carrito", new { area = "" }, new { @class = "" })
-                                    @Html.ActionLink("Pedidos", "Index", "Pedido", new { area = "" }, new { @class = "" })
+                                    @Html.ActionLink("Pedidos", "Index", "PedidoUser", new { area = "" }, new { @class = "" })
                                 }
                                 else if (sesionActiva.IdRol == 2)
                                 {
 
                                 }
-                                @Html.ActionLink("Perfil", "Logout", "Home", new { area = "" }, new { @class = "" })
+                                @*@Html.ActionLink("Perfil", "Logout", "Home", new { area = "" }, new { @class = "" })*@
                                 @Html.ActionLink("Cerrar Sesión", "Logout", "Home", new { area = "" }, new { @class = "" })
                             </div>
                         </div>
