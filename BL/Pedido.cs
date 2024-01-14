@@ -221,8 +221,13 @@ namespace BL
                                                         decimal total = 0;
                                                         foreach (var item in consultaTotal)
                                                         {
-                                                            string precioNormal = item.ToString();
-                                                            total = total + decimal.Parse(precioNormal);
+                                                            string precioNormal = item.PrecioVendido.ToString();
+
+                                                            int cantidadProducto = item.Cantidad.Value;
+                                                            
+                                                            decimal subtotalLocal = decimal.Parse(precioNormal) * cantidadProducto;
+
+                                                            total = total + subtotalLocal;
                                                         }
 
                                                         var setTotal = context.PedidoUpdateTotal(idPedido, total);

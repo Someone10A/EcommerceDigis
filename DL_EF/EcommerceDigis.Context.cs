@@ -675,15 +675,6 @@ namespace DL_EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PedidoDetalleAdd", idPedidoParameter, idProductoParameter, cantidadParameter, subtotalParameter, precioVendidoParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> PedidoGetPrecios(Nullable<int> idPedido)
-        {
-            var idPedidoParameter = idPedido.HasValue ?
-                new ObjectParameter("IdPedido", idPedido) :
-                new ObjectParameter("IdPedido", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("PedidoGetPrecios", idPedidoParameter);
-        }
-    
         public virtual int PedidoUpdateTotal(Nullable<int> idPedido, Nullable<decimal> total)
         {
             var idPedidoParameter = idPedido.HasValue ?
@@ -727,6 +718,15 @@ namespace DL_EF
                 new ObjectParameter("IdCarrito", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CarritoEmpty", idCarritoParameter);
+        }
+    
+        public virtual ObjectResult<PedidoGetPrecios_Result> PedidoGetPrecios(Nullable<int> idPedido)
+        {
+            var idPedidoParameter = idPedido.HasValue ?
+                new ObjectParameter("IdPedido", idPedido) :
+                new ObjectParameter("IdPedido", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PedidoGetPrecios_Result>("PedidoGetPrecios", idPedidoParameter);
         }
     }
 }

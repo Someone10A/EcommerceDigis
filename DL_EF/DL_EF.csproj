@@ -126,6 +126,9 @@
     <Compile Include="PedidoGetByIdPedido_Result.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>
+    <Compile Include="PedidoGetPrecios_Result.cs">
+      <DependentUpon>EcommerceDigis.tt</DependentUpon>
+    </Compile>
     <Compile Include="Producto.cs">
       <DependentUpon>EcommerceDigis.tt</DependentUpon>
     </Compile>

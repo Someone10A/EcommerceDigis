@@ -32,16 +32,17 @@
                     @foreach (ML.Pedido pedido in Model.Pedidos)
                     {
                         <tr>
-                            
+
                             <td>@pedido.Usuario.IdUsuario</td>
                             <td>@pedido.Fecha</td>
                             <td>@pedido.IdPedido</td>
-                            
+
                             <td>
-
-                                @*@Html.DropDownListFor(model => pedido.Estatus.IdEstatus, new SelectList(Model.Estatus.Estatuses, "IdEstatus", "Nombre"), "--Seleccione Estatus--", htmlAttributes: new { @onchange = ("changeEstatus(this.id)"), @id = pedido.IdPedido, @class = "form-control" })*@
-                                @Html.DropDownListFor(model => pedido.Estatus.IdEstatus, new SelectList(Model.Estatus.Estatuses, "IdEstatus", "Nombre"), "--Seleccione Estatus--", htmlAttributes: new { @onchange = "changeEstatus(this.id)", @id = pedido.IdPedido, @class = "form-control" })
-
+                                @{
+                                    var selectedValue = pedido.Estatus.IdEstatus;
+                                    var selectList = new SelectList(Model.Estatus.Estatuses, "IdEstatus", "Nombre", selectedValue);
+                                }
+                                @Html.DropDownListFor(p => pedido.Estatus.IdEstatus, selectList, "--Seleccione Estatus--", new { @id =  pedido.IdPedido, @onchange = ("changeEstatus(this.id)"), @class = "form-control" })
 
                             </td>
                         </tr>

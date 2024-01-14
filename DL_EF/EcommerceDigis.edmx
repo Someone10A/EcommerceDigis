@@ -910,9 +910,6 @@
             <Parameter Name="Subtotal" Mode="In" Type="Decimal" />
             <Parameter Name="PrecioVendido" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <FunctionImport Name="PedidoGetPrecios" ReturnType="Collection(Decimal)">
-          <Parameter Name="IdPedido" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="PedidoUpdateTotal">
             <Parameter Name="IdPedido" Mode="In" Type="Int32" />
             <Parameter Name="Total" Mode="In" Type="Decimal" />
@@ -924,7 +921,10 @@
           <FunctionImport Name="PedidoGetAll" ReturnType="Collection(EcommerceDigisModel.PedidoGetAll_Result)" />
           <FunctionImport Name="EstatusGetAll" ReturnType="Collection(EcommerceDigisModel.EstatusGetAll_Result)" />
           <FunctionImport Name="CarritoEmpty">
-            <Parameter Name="IdCarrito" Mode="In" Type="Int32" />
+          <Parameter Name="IdCarrito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PedidoGetPrecios" ReturnType="Collection(EcommerceDigisModel.PedidoGetPrecios_Result)">
+            <Parameter Name="IdPedido" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Usuario">
@@ -1412,6 +1412,10 @@
           <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="150" />
         </ComplexType>
+        <ComplexType Name="PedidoGetPrecios_Result">
+          <Property Type="Decimal" Name="PrecioVendido" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1867,7 +1871,6 @@
           <FunctionImportMapping FunctionImportName="PedidoAdd" FunctionName="EcommerceDigisModel.Store.PedidoAdd" />
           <FunctionImportMapping FunctionImportName="PedidoGetByStatus" FunctionName="EcommerceDigisModel.Store.PedidoGetByStatus" />
           <FunctionImportMapping FunctionImportName="PedidoDetalleAdd" FunctionName="EcommerceDigisModel.Store.PedidoDetalleAdd" />
-          <FunctionImportMapping FunctionImportName="PedidoGetPrecios" FunctionName="EcommerceDigisModel.Store.PedidoGetPrecios" />
           <FunctionImportMapping FunctionImportName="PedidoUpdateTotal" FunctionName="EcommerceDigisModel.Store.PedidoUpdateTotal" />
           <FunctionImportMapping FunctionImportName="PedidoUpdateEstatus" FunctionName="EcommerceDigisModel.Store.PedidoUpdateEstatus" />
           <FunctionImportMapping FunctionImportName="PedidoGetAll" FunctionName="EcommerceDigisModel.Store.PedidoGetAll">
@@ -1893,6 +1896,14 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CarritoEmpty" FunctionName="EcommerceDigisModel.Store.CarritoEmpty" />
+          <FunctionImportMapping FunctionImportName="PedidoGetPrecios" FunctionName="EcommerceDigisModel.Store.PedidoGetPrecios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EcommerceDigisModel.PedidoGetPrecios_Result">
+                <ScalarProperty Name="PrecioVendido" ColumnName="PrecioVendido" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
